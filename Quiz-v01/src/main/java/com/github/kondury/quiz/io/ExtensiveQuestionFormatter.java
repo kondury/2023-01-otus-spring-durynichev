@@ -1,15 +1,12 @@
 package com.github.kondury.quiz.io;
 
-import com.github.kondury.quiz.domain.Answer;
-import com.github.kondury.quiz.domain.ChoiceAnswer;
-import com.github.kondury.quiz.domain.Question;
-import com.github.kondury.quiz.domain.TextAnswer;
+import com.github.kondury.quiz.domain.*;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ExtensiveQuestionFormatter implements QuestionFormatter {
 
-    private static int index = 0;
+    private int index = 0;
     private final String header;
     private final String footer;
     private final boolean numerate;
@@ -21,25 +18,22 @@ public class ExtensiveQuestionFormatter implements QuestionFormatter {
         if (numerate) {
             builder.append(++index).append(". ");
         }
-        builder.append(question.content());
-        builder.append('\n');
-        Answer answer = question.answer();
-        if (answer instanceof ChoiceAnswer) {
-            builder.append("Answer type: choice\n");
+        builder.append(question.text()).append('\n');
+        builder.append("Answer type: ").append(question.type()).append('\n');
+
+        var answers = question.answers();
+        if (QuestionType.Choice == question.type()) {
             builder.append("Answers (correct are marked with '*'):\n");
-            int i = 1;
-            for (var e : ((ChoiceAnswer) answer).choices().entrySet()) {
-                String marker = e.getValue() ? "*" : "";
-                builder.append("%2s\t%s) %s\n".formatted(marker, i, e.getKey()));
-                i++;
+            int positionIndex = 1;
+            for (var answer : answers) {
+                String marker = answer.correct() ? "*" : "";
+                builder.append("%2s\t%s) %s\n".formatted(marker, positionIndex, answer.text()));
+                positionIndex++;
             }
-        } else if (answer instanceof TextAnswer) {
-            builder.append("Answer type: text\n");
+        } else if (QuestionType.Text == question.type()) {
             builder.append("Answer: ");
-            builder.append(((TextAnswer) answer).answer());
+            builder.append(answers.get(0));
             builder.append('\n');
-        } else {
-            throw new IllegalStateException("Unexpected value: " + answer.getClass());
         }
         builder.append(footer);
         return builder.toString();

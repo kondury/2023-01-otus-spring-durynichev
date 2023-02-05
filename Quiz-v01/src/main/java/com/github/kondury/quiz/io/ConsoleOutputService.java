@@ -1,15 +1,17 @@
 package com.github.kondury.quiz.io;
 
-import com.github.kondury.quiz.domain.Question;
-
 import java.io.PrintStream;
 
 public class ConsoleOutputService implements OutputService {
 
-    private final PrintStream out = System.out;
+    private final PrintStream out;
+
+    public ConsoleOutputService(OutputStreamProvider outputStreamProvider) {
+        this.out = outputStreamProvider.getPrintStream();
+    }
 
     @Override
-    public void output(Question question, QuestionFormatter formatter) {
-        out.println(formatter.format(question));
+    public void output(String text) {
+        out.println(text);
     }
 }

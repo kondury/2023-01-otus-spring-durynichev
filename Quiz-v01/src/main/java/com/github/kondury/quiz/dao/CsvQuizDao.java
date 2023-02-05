@@ -1,6 +1,8 @@
 package com.github.kondury.quiz.dao;
 
 import com.github.kondury.quiz.domain.Question;
+import com.github.kondury.quiz.domain.QuestionFactory;
+import lombok.RequiredArgsConstructor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,46 +12,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class CsvQuizDao implements QuizDao {
 
-    private static final String CSV_DAO_FILENAME = "questions.csv";
-
-    private final List<Question> questions;
-
-    public CsvQuizDao() throws IOException {
-        questions = CsvQuestionsLoader.load(CSV_DAO_FILENAME);
-    }
+    private final String csvDaoFilename;
 
     @Override
     public List<Question> getQuestions() {
-        return Collections.unmodifiableList(questions);
+        return Collections.unmodifiableList(load());
     }
 
-    private static class CsvQuestionsLoader {
-
-        public static List<Question> load(String csvDaoFilename) throws IOException {
-            List<Question> questions = new ArrayList<>();
-            try (InputStream is = getFileFromResourceAsStream(csvDaoFilename);
-                 InputStreamReader streamReader = new InputStreamReader(is);
-                 BufferedReader reader = new BufferedReader(streamReader)) {
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    questions.add(Question.Factory.createFromCsv(line));
-                }
+    private List<Question> load() {
+        List<Question> questions = new ArrayList<>();
+        try (InputStream is = getFileFromResourceAsStream(csvDaoFilename);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                questions.add(QuestionFactory.createFromCsv(line));
             }
-            return questions;
+        } catch (IOException e) {
+            throw new RuntimeException("IO error during file access: %s".formatted(csvDaoFilename), e);
         }
+        return questions;
+    }
 
-        private static InputStream getFileFromResourceAsStream(String fileName) {
-            ClassLoader classLoader = CsvQuestionsLoader.class.getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream(fileName);
+    private InputStream getFileFromResourceAsStream(String fileName) {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
 
-            if (inputStream == null) {
-                throw new IllegalArgumentException("file not found! " + fileName);
-            } else {
-                return inputStream;
-            }
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
         }
     }
 }

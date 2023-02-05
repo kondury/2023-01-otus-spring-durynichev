@@ -18,7 +18,7 @@ public class QuizServiceImpl implements QuizService {
     public void run() {
         final List<Question> questions = quizDao.getQuestions();
         for (final Question question : questions) {
-            outputService.output(question, formatter);
+            outputService.output(formatter.format(question));
         }
     }
 }

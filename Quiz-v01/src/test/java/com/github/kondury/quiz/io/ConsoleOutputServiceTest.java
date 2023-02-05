@@ -1,23 +1,23 @@
 package com.github.kondury.quiz.io;
 
-import com.github.kondury.quiz.domain.Question;
-import com.github.kondury.quiz.domain.TextAnswer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 class ConsoleOutputServiceTest {
 
-    ConsoleOutputUtils utils = new ConsoleOutputUtils();
+    private final ConsoleOutputUtils utils = new ConsoleOutputUtils();
 
-    OutputService outputService;
+    private OutputService outputService;
 
     @BeforeEach
     public void setUp() {
         utils.setUpStreams();
-        outputService = new ConsoleOutputService();
+        var outputStreamProvider = new ConsoleOutputStreamProvider();
+        outputService = new ConsoleOutputService(outputStreamProvider);
     }
 
     @AfterEach
@@ -26,10 +26,9 @@ class ConsoleOutputServiceTest {
     }
 
     @Test
-    void output_SingleQuestionWithHeaderAndFooterFormatted_Resul() {
-        Question simpleQuestion = new Question("Question body", new TextAnswer("Answer body"));
-        QuestionFormatter formatter = Record::toString;
-        outputService.output(simpleQuestion, formatter);
-        assertEquals("Question[content=Question body, answer=TextAnswer[answer=Answer body]]", utils.getOut());
+    void output_SendTextToOutput_OutputIsTheSame() {
+        String text = "Test string";
+        outputService.output(text);
+        assertEquals(text, utils.getOut());
     }
 }
