@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="outputStreamProvider" class="com.github.kondury.quiz.io.ConsoleOutputStreamProvider"/>
+
+    <bean id="outputService" class="com.github.kondury.quiz.io.ConsoleOutputService">
+        <constructor-arg ref="outputStreamProvider"/>
+    </bean>
+
+    <bean id="quizDao" class="com.github.kondury.quiz.dao.CsvQuizDao">
+        <constructor-arg index="0" type="java.lang.String" value="questions.csv"/>
+    </bean>
+
+    <bean id="formatter" class="com.github.kondury.quiz.io.ExtensiveQuestionFormatter">
+        <constructor-arg index="0" type="java.lang.String" value="Question №"/>
+        <constructor-arg index="1" type="java.lang.String" value=""/>
+        <constructor-arg index="2" type="boolean" value="true"/>
+    </bean>
+
+    <bean id="quizService" class="com.github.kondury.quiz.service.QuizServiceImpl">
+        <constructor-arg ref="outputService"/>
+        <constructor-arg ref="quizDao"/>
+        <constructor-arg ref="formatter"/>
+    </bean>
+
+</beans>
