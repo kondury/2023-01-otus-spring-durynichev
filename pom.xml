@@ -12,6 +12,7 @@
 
     <modules>
         <module>quiz-v01</module>
+        <module>quiz-v02</module>
     </modules>
 
     <properties>
@@ -22,7 +23,20 @@
                 <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
         -->
         <minimal.maven.version>3.8.1</minimal.maven.version>
+        <spring.boot.dependencies.version>3.0.2</spring.boot.dependencies.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
