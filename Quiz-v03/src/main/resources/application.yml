@@ -1,0 +1,15 @@
+spring:
+  messages:
+    basename: "i18n/messages"
+    encoding: "UTF-8"
+#    fallback-to-system-locale: false
+#  output.ansi.enabled: ALWAYS
+  banner:
+    location: banner.txt
+
+quiz:
+  locale: "ru_RU"
+  evaluation-min-percentage-to-pass: 80
+  csv-filename: "i18n/questions_${quiz.locale}.csv"
+  number-of-questions: 5
+  question-formatter-properties: "classpath:i18n/formatter_${quiz.locale}.properties"
