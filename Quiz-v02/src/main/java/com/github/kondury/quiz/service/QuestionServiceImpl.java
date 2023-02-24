@@ -22,7 +22,6 @@ public class QuestionServiceImpl implements QuestionService {
             try {
                 outputService.output(formatter.format(question));
                 var factory = answerFactoryManager.get(question.type());
-                // todo add validation method
                 var studentAnswer = inputService.readWith(factory);
                 return new AttemptUnit(question, studentAnswer);
             } catch (EntityCreateException e) {
