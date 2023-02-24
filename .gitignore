@@ -23,3 +23,6 @@ target/
 /nbdist/
 /.nb-gradle/
 
+/Quiz-v03/.mvn/
+/Quiz-v03/mvnw.cmd
+/Quiz-v03/mvnw
