@@ -1,7 +1,12 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+
+#!.mvn/wrapper/maven-wrapper.jar
+#!**/src/main/**/target/
+#!**/src/test/**/target/
+
+/mvnw
+/mvnw.cmd
+/.mvn/
 
 ### STS ###
 .apt_generated
@@ -20,6 +25,7 @@ target/
 
 ### NetBeans ###
 /nbproject/private/
+/build/
 /nbbuild/
 /dist/
 /nbdist/
@@ -31,6 +37,3 @@ build/
 ### VS Code ###
 .vscode/
 
-/Quiz-v03/.mvn/
-/Quiz-v03/mvnw.cmd
-/Quiz-v03/mvnw
