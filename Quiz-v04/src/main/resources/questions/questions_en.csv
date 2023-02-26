@@ -1,0 +1,5 @@
+*|What is a correct syntax to output "Hello World" in Kotlin?|+println("Hello World")|Console.WriteLine("Hello World");|System.out.printline("Hello World")|cout << "Hello World";
+*|How do you insert COMMENTS in Kotlin code?|+// This is a comment|-- This is a comment|/* This is a comment|# This is comment
+T|Which keyword is used to declare a function?|fun
+*|In Kotlin, code statements must end with a semicolon (;)|+False|True
+*|How can you create a variable with the numeric value 5?|int num = 5|num = 5|+val num = 5|num = 5 int

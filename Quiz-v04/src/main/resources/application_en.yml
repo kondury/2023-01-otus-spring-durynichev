@@ -1,0 +1,4 @@
+application-en:
+  question-formatter-settings:
+    footer:
+    header: "Question №"

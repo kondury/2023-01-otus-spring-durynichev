@@ -21,6 +21,7 @@
         <module>quiz-v01</module>
         <module>quiz-v02</module>
         <module>quiz-v03</module>
+        <module>quiz-v04</module>
     </modules>
 
     <properties>

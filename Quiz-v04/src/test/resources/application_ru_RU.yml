@@ -1,0 +1,4 @@
+application-ru_RU:
+  question-formatter-settings:
+    footer:
+    header: "[Тестовый режим] Вопрос №"

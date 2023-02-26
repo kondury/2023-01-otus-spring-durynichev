@@ -1,0 +1,21 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
+  messages:
+    basename: "i18n/messages"
+    encoding: "UTF-8"
+  banner:
+    location: "banner.txt"
+  config:
+    import: "classpath:application_${application.locale}.yml"
+
+application:
+  locale: "en"
+  min-percentage-to-pass: 80
+  csv-filename: "questions/questions_${application.locale}.csv"
+  questions-number: 5
+  question-formatter-settings:
+    is-sequential: true
+    header: ${application-${application.locale}.question-formatter-settings.header}
+    footer: ${application-${application.locale}.question-formatter-settings.footer}
