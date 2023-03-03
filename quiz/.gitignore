@@ -13,7 +13,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+../.idea
 *.iws
 *.iml
 *.ipr
@@ -36,3 +36,4 @@ build/
 /Quiz-v03/mvnw
 /spring-shell.log
 /Quiz-v04/spring-shell.log
+/.idea/
