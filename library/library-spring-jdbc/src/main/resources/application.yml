@@ -1,0 +1,17 @@
+﻿spring:
+  datasource:
+    url: jdbc:h2:mem:librarydb
+  sql:
+    init:
+      mode: never
+#  h2:
+#    console:
+#      path: /h2-console
+#      settings:
+#        web-allow-others: true
+#      enabled: true
+  liquibase:
+    enabled: true
+  shell:
+    history:
+      name: ./library-spring-jdbc/library-spring-shell.log
