@@ -39,3 +39,6 @@ build/
 
 /spring-shell.log
 /library-spring-shell.log
+/data/
+/data/librarydb.mv.db
+/data/librarydb.trace.db

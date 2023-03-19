@@ -1,9 +1,10 @@
 ﻿spring:
   datasource:
-    url: jdbc:h2:mem:librarydb
-  sql:
-    init:
-      mode: never
+    url: jdbc:h2:file:./library-spring-jdbc/data/librarydb
+#    url: jdbc:h2:mem:librarydb
+#  sql:
+#    init:
+#      mode: embedded
 #  h2:
 #    console:
 #      path: /h2-console
@@ -12,6 +13,8 @@
 #      enabled: true
   liquibase:
     enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
   shell:
     history:
+      # noinspection SpringBootApplicationYaml
       name: ./library-spring-jdbc/library-spring-shell.log

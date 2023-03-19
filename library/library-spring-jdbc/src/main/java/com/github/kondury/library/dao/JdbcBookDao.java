@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+
 @Repository
 @RequiredArgsConstructor
 public class JdbcBookDao implements BookDao {
@@ -53,6 +54,7 @@ public class JdbcBookDao implements BookDao {
         params.addValue("author_id", book.author() != null ? book.author().id() : null);
         params.addValue("genre_id", book.genre() != null ? book.genre().id() : null);
 
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcOperations.update(
                 """
@@ -80,8 +82,8 @@ public class JdbcBookDao implements BookDao {
                             genres.genre_id as genre_id,
                             genres.genre_name as genre_name
                         from books
-                        left join authors using(author_id)
-                        left join genres using(genre_id)""",
+                        left join authors on books.author_id = authors.author_id
+                        left join genres on books.genre_id = genres.genre_id""",
                 new BookMapper()
         );
     }
@@ -98,8 +100,8 @@ public class JdbcBookDao implements BookDao {
                             genres.genre_id as genre_id,
                             genres.genre_name as genre_name
                         from books
-                        left join authors using(author_id)
-                        left join genres using(genre_id)
+                        left join authors on books.author_id = authors.author_id
+                        left join genres on books.genre_id = genres.genre_id
                         where books.book_id = :book_id""",
                 Map.of("book_id", id),
                 new BookMapper()
