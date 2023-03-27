@@ -13,7 +13,7 @@ public class GenreCommands {
 
     private final GenreService genreService;
 
-    @ShellMethod("returns all genres accessible in database")
+    @ShellMethod(value = "returns all genres accessible in database", key = {"find-all-genres", "find-genres"})
     String findAllGenres() {
         return genreService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
     }

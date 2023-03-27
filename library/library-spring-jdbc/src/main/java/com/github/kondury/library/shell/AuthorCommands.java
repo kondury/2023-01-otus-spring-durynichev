@@ -13,7 +13,7 @@ public class AuthorCommands {
 
     private final AuthorService authorService;
 
-    @ShellMethod("returns all authors accessible in database")
+    @ShellMethod(value = "returns all authors accessible in database", key = {"find-all-authors", "find-authors"})
     String findAllAuthors() {
         return authorService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
     }

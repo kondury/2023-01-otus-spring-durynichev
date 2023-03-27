@@ -18,7 +18,7 @@ public class BookCommands {
     private final AuthorService authorService;
     private final GenreService genreService;
 
-    @ShellMethod("inserts book into database")
+    @ShellMethod(value = "inserts book into database", key = {"add-book", "insert-book"})
     String insertBook(String title, long authorId, long genreId) {
         var genre = genreService.findById(genreId);
         var author = authorService.findById(authorId);
@@ -27,17 +27,17 @@ public class BookCommands {
         return String.valueOf(result);
     }
 
-    @ShellMethod("returns all books accessible in database")
+    @ShellMethod(value = "returns all books accessible in database", key = {"find-all-books", "find-books"})
     String findAllBooks() {
         return bookService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
     }
 
-    @ShellMethod("returns book by id")
+    @ShellMethod(value = "returns book by id", key = {"find-book-by-id", "find-book"})
     String findBookById(long id) {
         return bookService.findById(id).toString();
     }
 
-    @ShellMethod("updates book properties by id")
+    @ShellMethod(value = "updates book properties by id", key = "update-book")
     String updateBook(long id, String title, long authorId, long genreId) {
         var genre = genreService.findById(genreId);
         var author = authorService.findById(authorId);
@@ -45,7 +45,7 @@ public class BookCommands {
         return String.valueOf(result);
     }
 
-    @ShellMethod("deletes book by id")
+    @ShellMethod(value = "deletes book by id", key = {"delete-book-by-id", "delete-book"})
     void deleteBookById(long id) {
         bookService.deleteById(id);
     }
