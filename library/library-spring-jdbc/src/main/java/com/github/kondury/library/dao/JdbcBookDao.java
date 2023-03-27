@@ -11,8 +11,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +22,16 @@ import java.util.Optional;
 public class JdbcBookDao implements BookDao {
 
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+    private final RowMapper<Book> mapper = (resultSet, rowNum) -> {
+        long id = resultSet.getLong("book_id");
+        String title = resultSet.getString("title");
+        long authorId = resultSet.getLong("author_id");
+        String authorName = resultSet.getString("author_name");
+        long genreId = resultSet.getLong("genre_id");
+        String genreName = resultSet.getString("genre_name");
+        return new Book(id, title, new Author(authorId, authorName), new Genre(genreId, genreName));
+    };
 
 
     @Override
@@ -84,7 +92,7 @@ public class JdbcBookDao implements BookDao {
                         from books
                         left join authors on books.author_id = authors.author_id
                         left join genres on books.genre_id = genres.genre_id""",
-                new BookMapper()
+                mapper
         );
     }
 
@@ -104,7 +112,7 @@ public class JdbcBookDao implements BookDao {
                         left join genres on books.genre_id = genres.genre_id
                         where books.book_id = :book_id""",
                 Map.of("book_id", id),
-                new BookMapper()
+                mapper
         );
         if (result.isEmpty()) {
             return Optional.empty();
@@ -117,18 +125,5 @@ public class JdbcBookDao implements BookDao {
         Map<String, Object> params = Map.of("book_id", id);
         var result = namedParameterJdbcOperations.update("delete from books where book_id = :book_id", params);
         return result > 0;
-    }
-
-    private static class BookMapper implements RowMapper<Book> {
-        @Override
-        public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-            long id = rs.getLong("book_id");
-            String title = rs.getString("title");
-            long authorId = rs.getLong("author_id");
-            String authorName = rs.getString("author_name");
-            long genreId = rs.getLong("genre_id");
-            String genreName = rs.getString("genre_name");
-            return new Book(id, title, new Author(authorId, authorName), new Genre(genreId, genreName));
-        }
     }
 }
