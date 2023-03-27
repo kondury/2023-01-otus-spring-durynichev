@@ -15,6 +15,8 @@ public class AuthorCommands {
 
     @ShellMethod(value = "returns all authors accessible in database", key = {"find-all-authors", "find-authors"})
     String findAllAuthors() {
-        return authorService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
+        return authorService.findAll().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining("\n"));
     }
 }

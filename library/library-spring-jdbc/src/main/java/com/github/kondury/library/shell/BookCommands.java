@@ -29,7 +29,9 @@ public class BookCommands {
 
     @ShellMethod(value = "returns all books accessible in database", key = {"find-all-books", "find-books"})
     String findAllBooks() {
-        return bookService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
+        return bookService.findAll().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining("\n"));
     }
 
     @ShellMethod(value = "returns book by id", key = {"find-book-by-id", "find-book"})

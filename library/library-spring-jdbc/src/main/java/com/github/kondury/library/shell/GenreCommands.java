@@ -15,6 +15,8 @@ public class GenreCommands {
 
     @ShellMethod(value = "returns all genres accessible in database", key = {"find-all-genres", "find-genres"})
     String findAllGenres() {
-        return genreService.findAll().stream().map(String::valueOf).collect(Collectors.joining("\n"));
+        return genreService.findAll().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining("\n"));
     }
 }
