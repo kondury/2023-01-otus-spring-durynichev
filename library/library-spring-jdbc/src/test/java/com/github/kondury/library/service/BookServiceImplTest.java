@@ -1,6 +1,8 @@
 package com.github.kondury.library.service;
 
+import com.github.kondury.library.dao.AuthorDao;
 import com.github.kondury.library.dao.BookDao;
+import com.github.kondury.library.dao.GenreDao;
 import com.github.kondury.library.domain.Author;
 import com.github.kondury.library.domain.Book;
 import com.github.kondury.library.domain.Genre;
@@ -15,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -27,31 +30,75 @@ class BookServiceImplTest {
 
     @Mock
     private BookDao bookDao;
+    @Mock
+    AuthorDao authorDao;
+    @Mock
+    GenreDao genreDao;
     @InjectMocks
     private BookServiceImpl bookService;
 
     @Test
     void insert_shouldPassBookToDaoAndReturnWhatDaoReturned() {
-        Book param = new Book(10L, "In", new Author(10L, "author"), new Genre(10L, "genre"));
-        Book result = new Book(20L, "Out", new Author(20L, "author"), new Genre(20L, "genre"));
+        String titleIn = "In";
+        long authorId = 10L;
+        long genreId = 10L;
+        Author author = new Author(authorId, "author");
+        Genre genre = new Genre(genreId, "genre");
+        Book resultBook = new Book(titleIn, author, genre);
 
-        given(bookDao.insert(any())).willReturn(result);
-        assertThat(bookService.insert(param)).isEqualTo(result);
-        ArgumentCaptor<Book> captor = ArgumentCaptor.forClass(Book.class);
-        verify(bookDao, times(1)).insert(captor.capture());
-        assertThat(captor.getAllValues()).hasSize(1).containsExactly(param);
+        given(genreDao.findById(anyLong())).willReturn(Optional.of(genre));
+        given(authorDao.findById(anyLong())).willReturn(Optional.of(author));
+        given(bookDao.insert(any())).willReturn(resultBook);
+
+        assertThat(bookService.insert("In", authorId, genreId)).isEqualTo(resultBook);
+
+        ArgumentCaptor<Long> authorIdCaptor = ArgumentCaptor.forClass(Long.class);
+        verify(authorDao, times(1)).findById(authorIdCaptor.capture());
+        assertThat(authorIdCaptor.getAllValues()).hasSize(1).containsExactly(authorId);
+
+        ArgumentCaptor<Long> genreIdCaptor = ArgumentCaptor.forClass(Long.class);
+        verify(genreDao, times(1)).findById(genreIdCaptor.capture());
+        assertThat(genreIdCaptor.getAllValues()).hasSize(1).containsExactly(genreId);
+
+        ArgumentCaptor<Book> bookCaptor = ArgumentCaptor.forClass(Book.class);
+        verify(bookDao, times(1)).insert(bookCaptor.capture());
+        assertThat(bookCaptor.getAllValues())
+                .hasSize(1)
+                .extracting(Book::title, Book::author, Book::genre)
+                .containsExactly(tuple(titleIn, author, genre));
+
     }
 
     @Test
     void update_shouldPassBookToDaoAndReturnWhatDaoReturned() {
-        Book param = new Book(10L, "In", new Author(10L, "author"), new Genre(10L, "genre"));
-        Book result = new Book(20L, "Out", new Author(20L, "author"), new Genre(20L, "genre"));
+        long bookId = 1L;
+        String titleIn = "In";
+        long authorId = 10L;
+        long genreId = 10L;
+        Author author = new Author(authorId, "author");
+        Genre genre = new Genre(genreId, "genre");
+        Book resultBook = new Book(titleIn, author, genre);
 
-        given(bookDao.update(any())).willReturn(result);
-        assertThat(bookService.update(param)).isEqualTo(result);
-        ArgumentCaptor<Book> captor = ArgumentCaptor.forClass(Book.class);
-        verify(bookDao, times(1)).update(captor.capture());
-        assertThat(captor.getAllValues()).hasSize(1).containsExactly(param);
+        given(genreDao.findById(anyLong())).willReturn(Optional.of(genre));
+        given(authorDao.findById(anyLong())).willReturn(Optional.of(author));
+        given(bookDao.update(any())).willReturn(resultBook);
+
+        assertThat(bookService.update(bookId, "In", authorId, genreId)).isEqualTo(resultBook);
+
+        ArgumentCaptor<Long> authorIdCaptor = ArgumentCaptor.forClass(Long.class);
+        verify(authorDao, times(1)).findById(authorIdCaptor.capture());
+        assertThat(authorIdCaptor.getAllValues()).hasSize(1).containsExactly(authorId);
+
+        ArgumentCaptor<Long> genreIdCaptor = ArgumentCaptor.forClass(Long.class);
+        verify(genreDao, times(1)).findById(genreIdCaptor.capture());
+        assertThat(genreIdCaptor.getAllValues()).hasSize(1).containsExactly(genreId);
+
+        ArgumentCaptor<Book> bookCaptor = ArgumentCaptor.forClass(Book.class);
+        verify(bookDao, times(1)).update(bookCaptor.capture());
+        assertThat(bookCaptor.getAllValues())
+                .hasSize(1)
+                .extracting(Book::title, Book::author, Book::genre)
+                .containsExactly(tuple(titleIn, author, genre));
     }
 
     @Test
