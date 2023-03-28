@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.*;
 class JpaCommentDaoTest {
 
     @Autowired
-    private BookDao bookDao;
-    @Autowired
     private CommentDao commentDao;
     @Autowired
     private TestEntityManager em;
@@ -108,20 +106,22 @@ class JpaCommentDaoTest {
     }
 
     @Test
-    void delete_shouldDeleteBookById() {
-        var existentBookId = 1L;
-        var bookToRemove = em.find(Book.class, existentBookId);
-        assertThat(bookToRemove).isNotNull();
-        em.detach(bookToRemove);
-        assertThat(bookDao.deleteById(existentBookId)).isTrue();
-        assertThat(em.find(Book.class, existentBookId)).isNull();
-        assertThat(bookDao.deleteById(existentBookId)).isFalse();
+    void delete_shouldDeleteCommentById() {
+        var existentCommentId = 1L;
+        var commentToRemove = em.find(Comment.class, existentCommentId);
+
+        assertThat(commentToRemove).isNotNull();
+        em.detach(commentToRemove);
+
+        assertThat(commentDao.deleteById(existentCommentId)).isTrue();
+        assertThat(em.find(Comment.class, existentCommentId)).isNull();
+        assertThat(commentDao.deleteById(existentCommentId)).isFalse();
     }
 
     @Test
-    void delete_shouldReturnFalseIfBookIdDoesNotExist() {
-        var nonExistentBookId = 4L;
-        assertThat(bookDao.deleteById(nonExistentBookId)).isFalse();
+    void delete_shouldReturnFalseIfCommentIdDoesNotExist() {
+        var nonExistentCommentId = 5L;
+        assertThat(commentDao.deleteById(nonExistentCommentId)).isFalse();
     }
 
 }
