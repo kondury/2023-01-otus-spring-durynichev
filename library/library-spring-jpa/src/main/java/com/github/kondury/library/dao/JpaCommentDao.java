@@ -1,5 +1,6 @@
 package com.github.kondury.library.dao;
 
+import com.github.kondury.library.domain.Book;
 import com.github.kondury.library.domain.Comment;
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
@@ -7,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,18 +18,18 @@ import java.util.Optional;
 public class JpaCommentDao implements CommentDao {
 
     @PersistenceContext
-    EntityManager em;
+    private final EntityManager em;
 
     @Override
     public List<Comment> findByBookId(Long bookId) {
-        return em.createQuery(
-                        """
-                                select comment from Comment comment
-                                join fetch comment.book
-                                where comment.book.id = :id""",
-                        Comment.class
-                ).setParameter("id", bookId)
-                .getResultList();
+        var book = em.find(Book.class, bookId);
+        if (book != null) {
+            return em.createQuery("select comment from Comment comment where comment.book.id = :bookId",
+                            Comment.class)
+                    .setParameter("bookId", bookId)
+                    .getResultList();
+        }
+        return Collections.emptyList();
     }
 
     @Override

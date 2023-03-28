@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommentConverterImpl implements CommentConverter {
+
     @Override
     public String convert(Comment comment) {
         return "Comment(id=%s, bookId=%s, text=\"%s\")"

@@ -23,19 +23,18 @@ class JpaCommentDaoTest {
     private BookDao bookDao;
     @Autowired
     private CommentDao commentDao;
-
     @Autowired
     private TestEntityManager em;
 
     @Test
     void findByBookId_shouldReturnAllBookCommentsWithCorrectFields() {
-        var dunaBookId = 1L;
+        var duneBookId = 1L;
         var expected = List.of(
-                tuple("It's the real masterpiece!!! Must read!!!", dunaBookId, "Dune"),
-                tuple("As for me it was a little bit too lingering and somewhat boring", dunaBookId, "Dune")
+                tuple("It's the real masterpiece!!! Must read!!!", duneBookId, "Dune"),
+                tuple("As for me it was a little bit too lingering and somewhat boring", duneBookId, "Dune")
         );
 
-        assertThat(commentDao.findByBookId(dunaBookId))
+        assertThat(commentDao.findByBookId(duneBookId))
                 .hasSize(2)
                 .extracting(
                         Comment::getText,

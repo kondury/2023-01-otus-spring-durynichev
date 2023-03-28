@@ -22,8 +22,7 @@ import static org.assertj.core.api.Assertions.*;
 class JpaBookDaoTest {
 
     @Autowired
-    BookDao bookDao;
-
+    private BookDao bookDao;
     @Autowired
     private TestEntityManager em;
 

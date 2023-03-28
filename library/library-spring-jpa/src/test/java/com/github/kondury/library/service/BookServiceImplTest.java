@@ -29,14 +29,10 @@ class BookServiceImplTest {
 
     @Mock
     private BookDao bookDao;
-    
     @Mock
     private AuthorDao authorDao;
-    
     @Mock
     private GenreDao genreDao;
-    
-    
     @InjectMocks
     private BookServiceImpl bookService;
 
