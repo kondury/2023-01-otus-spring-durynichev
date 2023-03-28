@@ -26,4 +26,9 @@ public class JpaGenreDao implements GenreDao {
     public Optional<Genre> findById(Long id) {
         return Optional.ofNullable(em.find(Genre.class, id));
     }
+
+    @Override
+    public Genre getReferenceById(Long id) {
+        return em.getReference(Genre.class, id);
+    }
 }

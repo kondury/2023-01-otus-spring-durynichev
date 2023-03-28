@@ -26,4 +26,9 @@ public class JpaAuthorDao implements AuthorDao {
     public Optional<Author> findById(Long id) {
         return Optional.ofNullable(em.find(Author.class, id));
     }
+
+    @Override
+    public Author getReferenceById(Long id) {
+        return em.getReference(Author.class, id);
+    }
 }

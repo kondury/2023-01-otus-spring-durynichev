@@ -11,4 +11,6 @@ public interface BookDao {
     List<Book> findAllCompleted();
     Optional<Book> findByIdCompleted(Long id);
     boolean deleteById(Long id);
+
+    Book getReferenceById(Long id);
 }

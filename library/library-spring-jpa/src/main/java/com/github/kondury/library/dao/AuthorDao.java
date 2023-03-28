@@ -9,4 +9,6 @@ public interface AuthorDao {
     List<Author> findAll();
 
     Optional<Author> findById(Long id);
+
+    Author getReferenceById(Long id);
 }
