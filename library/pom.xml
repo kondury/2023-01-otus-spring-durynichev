@@ -20,6 +20,7 @@
     <modules>
         <module>library-spring-jdbc</module>
         <module>library-spring-jpa</module>
+        <module>library-spring-data-jpa</module>
     </modules>
 
     <properties>
