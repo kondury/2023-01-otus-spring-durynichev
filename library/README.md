@@ -8,3 +8,6 @@ Keywords: Spring Boot, Spring JPA, Spring Shell, Liquibase
 
 ## 3) Library with Spring Data JPA
 Keywords: Spring Boot, Spring Data JPA, Spring Shell, Liquibase
+
+## 4) Library with Spring Data + MongoDB
+Keywords: Spring Boot, Spring Data MongoDB, Spring Shell, Liquibase
