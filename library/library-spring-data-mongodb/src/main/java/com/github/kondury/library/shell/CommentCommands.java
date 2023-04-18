@@ -15,20 +15,19 @@ public class CommentCommands {
     private final CommentService commentService;
     private final CommentConverter commentConverter;
 
-    @ShellMethod(value = "inserts comment into database", key = {"add-comment", "insert-comment"})
-    String insertComment(long bookId, String text) {
+    @ShellMethod(value = "inserts a comment into the database", key = {"add-comment", "insert-comment"})
+    String insertComment(String bookId, String text) {
         try {
-            return commentService.insert(bookId, text)
-                    .map(commentConverter::convert)
-                    .orElseThrow();
+            var comment = commentService.insert(bookId, text);
+            return commentConverter.convert(comment);
         } catch (RuntimeException e) {
-            System.out.println("Comment was not inserted. For more information use the 'stacktrace' command");
+            System.out.println("The comment is not inserted. For more information use the 'stacktrace' command");
             throw e;
         }
     }
 
     @ShellMethod(value = "returns all comments by book", key = {"find-comments"})
-    String findCommentsByBookId(long bookId) {
+    String findCommentsByBookId(String bookId) {
         var comments = commentService.findByBookId(bookId);
         if (!comments.isEmpty()) {
             return comments.stream()
@@ -38,29 +37,28 @@ public class CommentCommands {
         return "Comments weren't found: bookId=" + bookId;
     }
 
-    @ShellMethod(value = "returns comment by id", key = {"find-comment"})
-    String findCommentById(long id) {
+    @ShellMethod(value = "returns a comment by id", key = {"find-comment"})
+    String findCommentById(String id) {
         return commentService.findById(id)
                 .map(commentConverter::convert)
                 .orElse("The comment is not found: id=" + id);
     }
 
     @ShellMethod(value = "updates comment properties", key = "update-comment")
-    String updateComment(long commentId, long bookId, String text) {
+    String updateComment(String commentId, String bookId, String text) {
         try {
-            return commentService.update(commentId, bookId, text)
-                    .map(commentConverter::convert)
-                    .orElseThrow();
+            var comment = commentService.update(commentId, bookId, text);
+            return commentConverter.convert(comment);
         } catch (RuntimeException e) {
-            System.out.println("The comment is not updated. For more information use 'stacktrace' command");
+            System.out.println("The comment is not updated. For more information use the 'stacktrace' command");
             throw e;
         }
     }
 
     @ShellMethod(value = "deletes comment by id", key = {"delete-comment"})
-    String deleteCommentById(long id) {
+    String deleteCommentById(String id) {
         commentService.deleteById(id);
-        return "Deleted.";
+        return "The delete command is executed.";
     }
 
 }
