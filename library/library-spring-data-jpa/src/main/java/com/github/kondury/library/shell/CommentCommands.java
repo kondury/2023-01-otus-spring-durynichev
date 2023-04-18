@@ -22,7 +22,7 @@ public class CommentCommands {
                     .map(commentConverter::convert)
                     .orElseThrow();
         } catch (RuntimeException e) {
-            System.out.println("Comment was not inserted. For more information use 'stacktrace' command");
+            System.out.println("Comment was not inserted. For more information use the 'stacktrace' command");
             throw e;
         }
     }
