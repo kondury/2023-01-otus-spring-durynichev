@@ -17,10 +17,13 @@ public class CommentCommands {
 
     @ShellMethod(value = "inserts a comment into the database", key = {"add-comment", "insert-comment"})
     String insertComment(String bookId, String text) {
-        return commentService.insert(bookId, text)
-                .map(commentConverter::convert)
-                .orElse("The comment was not inserted. " +
-                        "Check that the database contains a book having such an id: bookId=" + bookId);
+        try {
+            var comment = commentService.insert(bookId, text);
+            return commentConverter.convert(comment);
+        } catch (RuntimeException e) {
+            System.out.println("The comment is not inserted. For more information use the 'stacktrace' command");
+            throw e;
+        }
     }
 
     @ShellMethod(value = "returns all comments by book", key = {"find-comments"})
@@ -38,15 +41,18 @@ public class CommentCommands {
     String findCommentById(String id) {
         return commentService.findById(id)
                 .map(commentConverter::convert)
-                .orElse("A comment is not found: id=" + id);
+                .orElse("The comment is not found: id=" + id);
     }
 
     @ShellMethod(value = "updates comment properties", key = "update-comment")
     String updateComment(String commentId, String bookId, String text) {
-        return commentService.update(commentId, bookId, text)
-                .map(commentConverter::convert)
-                .orElse("The comment was not updated. Check that the database contains a book and" +
-                        " a comment with their respected ids: commentId=" + commentId + ", bookId=" + bookId);
+        try {
+            var comment = commentService.update(commentId, bookId, text);
+            return commentConverter.convert(comment);
+        } catch (RuntimeException e) {
+            System.out.println("The comment is not updated. For more information use the 'stacktrace' command");
+            throw e;
+        }
     }
 
     @ShellMethod(value = "deletes comment by id", key = {"delete-comment"})

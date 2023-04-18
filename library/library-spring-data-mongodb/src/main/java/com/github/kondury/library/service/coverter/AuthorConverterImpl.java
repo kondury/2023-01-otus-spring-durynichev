@@ -3,10 +3,10 @@ package com.github.kondury.library.service.coverter;
 import com.github.kondury.library.domain.Author;
 import org.springframework.stereotype.Component;
 
-import static com.github.kondury.library.domain.Author.UNKNOWN_AUTHOR;
-
 @Component
 public class AuthorConverterImpl implements AuthorConverter {
+
+    public static final String UNKNOWN_AUTHOR = "<UNKNOWN AUTHOR>";
 
     @Override
     public String convert(Author author) {

@@ -1,12 +1,14 @@
 package com.github.kondury.library.repository;
 
 import com.github.kondury.library.domain.Book;
+import com.github.kondury.library.domain.Comment;
 import com.github.kondury.library.event.MongoBookCascadeDeleteEventsListener;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
     @Autowired
-    private CommentRepository commentRepository;
+    private MongoTemplate mongoTemplate;
 
     @Test
     void findAll_shouldReturnAllBooksWithCorrectAuthorsAndGenres() {
@@ -42,13 +44,13 @@ class BookRepositoryTest {
     @Test
     void delete_shouldDeleteBookByIdAndAllBookComments() {
 
-        val books = bookRepository.findAll();
+        val books = mongoTemplate.findAll(Book.class);
         val bookToDelete = books.get(0);
 
         bookRepository.deleteById(bookToDelete.getId());
 
-        assertThat(commentRepository.findByBookId(bookToDelete.getId())).isEmpty();
-        assertThat(commentRepository.findAll())
+        assertThat(mongoTemplate.findById(bookToDelete.getId(), Comment.class)).isNull();
+        assertThat(mongoTemplate.findAll(Comment.class))
                 .extracting(v -> v.getBook().getId())
                 .doesNotContain(bookToDelete.getId());
     }

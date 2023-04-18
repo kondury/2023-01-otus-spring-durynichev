@@ -22,7 +22,7 @@ public class CommentCommands {
                     .map(commentConverter::convert)
                     .orElseThrow();
         } catch (RuntimeException e) {
-            System.out.println("Comment was not inserted. For more information use 'stacktrace' command");
+            System.out.println("The comment is not inserted. For more information use 'stacktrace' command");
             throw e;
         }
     }
@@ -42,7 +42,7 @@ public class CommentCommands {
     String findCommentById(long id) {
         return commentService.findById(id)
                 .map(commentConverter::convert)
-                .orElse("Comment is not found: id=" + id);
+                .orElse("The comment is not found: id=" + id);
     }
 
     @ShellMethod(value = "updates comment properties", key = "update-comment")
@@ -52,7 +52,7 @@ public class CommentCommands {
                     .map(commentConverter::convert)
                     .orElseThrow();
         } catch (RuntimeException e) {
-            System.out.println("Comment was not updated. For more information use 'stacktrace' command");
+            System.out.println("The comment is not updated. For more information use 'stacktrace' command");
             throw e;
         }
     }

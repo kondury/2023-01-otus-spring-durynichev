@@ -38,10 +38,17 @@ class CommentServiceImplTest {
         Comment comment = mock(Comment.class);
         Book book = mock(Book.class);
 
+        given(commentRepository.existsById(anyString())).willReturn(true);
         given(bookRepository.findById(anyString())).willReturn(Optional.of(book));
         given(commentRepository.save(any())).willReturn(comment);
 
-        assertThat(commentService.update(commentId, bookId, text)).isEqualTo(Optional.of(comment));
+        assertThat(commentService.update(commentId, bookId, text)).isEqualTo(comment);
+
+        ArgumentCaptor<String> commentIdCaptor = ArgumentCaptor.forClass(String.class);
+        verify(commentRepository, times(1)).existsById(commentIdCaptor.capture());
+        assertThat(commentIdCaptor.getAllValues())
+                .hasSize(1)
+                .containsExactly(commentId);
 
         ArgumentCaptor<String> bookIdCaptor = ArgumentCaptor.forClass(String.class);
         verify(bookRepository, times(1)).findById(bookIdCaptor.capture());
@@ -67,7 +74,7 @@ class CommentServiceImplTest {
         given(bookRepository.findById(anyString())).willReturn(Optional.of(book));
         given(commentRepository.save(any())).willReturn(comment);
 
-        assertThat(commentService.insert(bookId, text)).isEqualTo(Optional.of(comment));
+        assertThat(commentService.insert(bookId, text)).isEqualTo(comment);
 
         ArgumentCaptor<String> bookIdCaptor = ArgumentCaptor.forClass(String.class);
         verify(bookRepository, times(1)).findById(bookIdCaptor.capture());

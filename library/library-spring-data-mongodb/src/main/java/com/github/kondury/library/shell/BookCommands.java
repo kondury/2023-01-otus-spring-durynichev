@@ -8,11 +8,11 @@ import org.springframework.shell.standard.ShellMethod;
 
 import java.util.stream.Collectors;
 
-import static com.github.kondury.library.domain.Genre.UNKNOWN_GENRE;
-
 @ShellComponent
 @RequiredArgsConstructor
 public class BookCommands {
+
+    public static final String UNKNOWN_GENRE = "<UNKNOWN GENRE>";
 
     private final BookService bookService;
     private final BookConverter bookConverter;
@@ -20,10 +20,13 @@ public class BookCommands {
     @ShellMethod(value = "inserts a book into database, use '<UNKNOWN GENRE>' to insert book without any genre",
             key = {"add-book", "insert-book"})
     String insertBook(String title, String authorId, String genreId) {
-        return bookService.insert(title, authorId, getGenreId(genreId))
-                .map(bookConverter::convert)
-                .orElse("The book is not inserted. Check that the database" +
-                        " contains a genre and an author with their respected ids.");
+        try {
+            var book = bookService.insert(title, authorId, getGenreId(genreId));
+            return bookConverter.convert(book);
+        } catch (RuntimeException e) {
+            System.out.println("The book is not inserted. For more information use the 'stacktrace' command");
+            throw e;
+        }
     }
 
     @ShellMethod(value = "returns all books accessible in the database", key = {"find-all-books", "find-books"})
@@ -42,10 +45,13 @@ public class BookCommands {
     @ShellMethod(value = "updates a book properties by id, use '<UNKNOWN GENRE>' to remove book's genre",
             key = "update-book")
     String updateBook(String id, String title, String authorId, String genreId) {
-        return bookService.update(id, title, authorId, getGenreId(genreId))
-                .map(bookConverter::convert)
-                .orElse("The book is not updated. Check that the database" +
-                        " contains a genre and an author with their respected ids.");
+        try {
+            var book = bookService.update(id, title, authorId, getGenreId(genreId));
+            return bookConverter.convert(book);
+        } catch (RuntimeException e) {
+            System.out.println("The book is not updated. For more information use the 'stacktrace' command");
+            throw e;
+        }
     }
 
     @ShellMethod(value = "deletes a book by id", key = {"delete-book-by-id", "delete-book"})

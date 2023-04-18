@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface BookService {
 
-    Optional<Book> insert(String title, String authorId, String genreId);
-    Optional<Book> update(String id, String title, String authorId, String genreId);
+    Book insert(String title, String authorId, String genreId);
+    Book update(String bookId, String title, String authorId, String genreId);
     List<Book> findAll();
     Optional<Book> findById(String id);
     void deleteById(String id);

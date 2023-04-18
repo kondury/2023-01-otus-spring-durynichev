@@ -6,6 +6,7 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Objects;
 
@@ -18,25 +19,22 @@ class GenreRepositoryTest {
     @Autowired
     private GenreRepository genreRepository;
     @Autowired
-    private BookRepository bookRepository;
+    private MongoTemplate mongoTemplate;
 
     @Test
     void deleteById_shouldRemoveGenreFromAllBooksWhenDeletingGenre() {
 
-        val books = bookRepository.findAll();
-        val book = books.get(0);
-        val genreToDelete = book.getGenre();
-        var genres = genreRepository.findAll();
+        val genreToDelete = mongoTemplate.findAll(Book.class).get(0).getGenre();
+        val expectedGenresCount = mongoTemplate.findAll(Genre.class).size() - 1;
 
         genreRepository.deleteById(genreToDelete.getId());
 
-        val expectedGenresCount = genres.size() - 1;
-        assertThat(genreRepository.findAll())
+        assertThat(mongoTemplate.findAll(Genre.class))
                 .hasSize(expectedGenresCount)
                 .extracting(Genre::getName)
                 .doesNotContain(genreToDelete.getName());
 
-        assertThat(bookRepository.findAll())
+        assertThat(mongoTemplate.findAll(Book.class))
                 .extracting(Book::getGenre)
                 .filteredOn(Objects::nonNull)
                 .extracting(Genre::getName)

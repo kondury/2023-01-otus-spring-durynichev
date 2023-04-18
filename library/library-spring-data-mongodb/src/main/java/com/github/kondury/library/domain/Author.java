@@ -14,10 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("authors")
 public class Author {
 
-    public static final String UNKNOWN_AUTHOR = "<UNKNOWN AUTHOR>";
-
     @Id
     private String id;
+
     private String name;
 
     public Author(String name) {

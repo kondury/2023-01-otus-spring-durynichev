@@ -14,8 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("genres")
 public class Genre {
 
-    public static final String UNKNOWN_GENRE = "<UNKNOWN GENRE>";
-
     @Id
     private String id;
     private String name;
