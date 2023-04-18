@@ -1,0 +1,28 @@
+﻿spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: library
+  shell:
+    history:
+      name: ./library-spring-data-mongodb/library-spring-shell.log
+mongock:
+#  runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - com.github.kondury.library.changelog
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
+
+logging:
+  level:
+    ROOT: ERROR
+#    org:
+#      springframework:
+#        data:
+#          mongodb:
+#            core:
+#              MongoTemplate: DEBUG
