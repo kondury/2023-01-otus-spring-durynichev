@@ -15,7 +15,6 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +25,7 @@ import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(LibraryController.class)
@@ -57,7 +56,6 @@ class LibraryControllerTest {
         List<BookDto> books = List.of(bookDto);
         given(bookService.findAll()).willReturn(books);
         mvc.perform(get("/books/list"))
-                .andDo(print())
                 .andExpectAll(
                         view().name("books/bookList"),
                         model().attribute("books", books),
@@ -83,7 +81,7 @@ class LibraryControllerTest {
     @Test
     void addBook_givenCorrectRequest_shouldCallInsertAndRedirectToMainPage() throws Exception {
         CreateBookRequest request = new CreateBookRequest("title", 1L, 1L);
-        mvc.perform(MockMvcRequestBuilders.post("/books/new")
+        mvc.perform(post("/books/new")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", request.title())
                         .param("authorId", String.valueOf(request.authorId()))
@@ -101,7 +99,7 @@ class LibraryControllerTest {
         given(authorService.findAll()).willReturn(allAuthors);
         given(genreService.findAll()).willReturn(allGenres);
 
-        mvc.perform(MockMvcRequestBuilders.post("/books/new")
+        mvc.perform(post("/books/new")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", title)
                         .param("authorId", String.valueOf(authorId))
@@ -133,7 +131,7 @@ class LibraryControllerTest {
     @Test
     void updateBook_givenCorrectRequest_shouldCallUpdateAndRedirectToMainPage() throws Exception {
         UpdateBookRequest request = new UpdateBookRequest(1L, "title", 1L, 1L);
-        mvc.perform(MockMvcRequestBuilders.post("/books/1/edit")
+        mvc.perform(post("/books/1/edit")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", String.valueOf(request.id()))
                         .param("title", request.title())
@@ -157,7 +155,7 @@ class LibraryControllerTest {
         given(authorService.findById(anyLong())).willReturn(Optional.of(authorDto));
         given(genreService.findById(anyLong())).willReturn(Optional.of(genreDto));
 
-        mvc.perform(MockMvcRequestBuilders.post("/books/1/edit")
+        mvc.perform(post("/books/1/edit")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", String.valueOf(1L))
                         .param("title", "")
@@ -194,7 +192,6 @@ class LibraryControllerTest {
         given(commentService.findByBookId(bookId)).willReturn(comments);
 
         mvc.perform(get("/books/1/comments/list"))
-                .andDo(print())
                 .andExpectAll(
                         view().name("books/bookCommentsList"),
                         model().attribute("bookDto", bookDto),
@@ -208,7 +205,7 @@ class LibraryControllerTest {
 
     @Test
     void deleteBook_serviceDeleteIsCalledAndThenRedirect() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/books/1/delete")
+        mvc.perform(post("/books/1/delete")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpectAll(
                         view().name("redirect:/"),
@@ -222,7 +219,7 @@ class LibraryControllerTest {
             Throwable ex, HttpStatus resultHttpStatus, String resultReason, String resultMessage) throws Exception {
 
         given(bookService.update(any())).willThrow(ex);
-        mvc.perform(MockMvcRequestBuilders.post("/books/1/edit")
+        mvc.perform(post("/books/1/edit")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", String.valueOf(1L))
                         .param("title", "The Book")
@@ -240,7 +237,7 @@ class LibraryControllerTest {
             Throwable ex, HttpStatus resultHttpStatus, String resultReason, String resultMessage) throws Exception {
 
         given(bookService.insert(any())).willThrow(ex);
-        mvc.perform(MockMvcRequestBuilders.post("/books/new")
+        mvc.perform(post("/books/new")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "The Book")
                         .param("authorId", String.valueOf(1L))
