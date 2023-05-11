@@ -1,0 +1,28 @@
+﻿spring:
+  messages:
+    encoding: UTF-8
+  datasource:
+    url: jdbc:h2:file:./library-mvc-rest/db/librarydb
+#  h2:
+#    console:
+#      path: /h2-console
+#      settings:
+#        web-allow-others: true
+#      enabled: true
+  jpa:
+    #    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+#    properties:
+#      hibernate:
+#        format_sql: true
+    show-sql: true
+  liquibase:
+    enabled: true
+  sql:
+    init:
+      mode: never
+logging:
+  level:
+    ROOT: ERROR
+    web: debug

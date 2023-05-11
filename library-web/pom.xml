@@ -19,6 +19,7 @@
 
     <modules>
         <module>library-mvc</module>
+        <module>library-mvc-rest</module>
     </modules>
 
     <properties>
