@@ -23,14 +23,14 @@ class CommentControllerTest {
     private CommentService commentService;
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @Autowired
     private ObjectMapper mapper;
 
     @Test
     void getCommentsByBookId_shouldReturnCommentListReturnedByService() throws Exception {
-        var comments = List.of(new CommentDto(1l, "Comment1", 1L),
+        var comments = List.of(new CommentDto(1L, "Comment1", 1L),
                 new CommentDto(2L, "Comment2", 2L));
         given(commentService.findByBookId(1L)).willReturn(comments);
         mvc.perform(get("/api/comments").param("bookId", "1"))
