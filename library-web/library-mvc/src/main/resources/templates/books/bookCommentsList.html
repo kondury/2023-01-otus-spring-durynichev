@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all books</title>
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+
+        .comments {
+            border: 1px solid steelblue;
+            width: 600px;
+            border-collapse: collapse;
+        }
+
+        .comments tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .comments td:last-child, td:first-child {
+            width: 50px;
+        }
+
+        .buttons {
+            padding: 2px 2px 4px;
+            border-collapse: collapse;
+        }
+
+        .button {
+            text-decoration: none;
+            background-color: #EEEEEE;
+            color: #333333;
+            padding: 2px 2px 2px 2px;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #CCCCCC;
+            display:inline-block;
+            width:100px;
+            height:100%;
+            text-align: center;
+        }
+
+        .row {
+            margin-top: 10px;
+            min-width: fit-content;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<h3 th:text="#{comments-list-header}">Comments:</h3>
+
+<div class="buttons">
+    <a class="button" href="bookList.html" th:href="@{/books/list}" th:text="#{back-button-caption}">Back</a>
+</div>
+
+<div class="row" th:object="${bookDto}">
+    <p th:text="|#{book-field-id}: *{id}|">ID: 1</p>
+    <p th:text="|#{book-field-title}: *{title}|">Title: The Tragedy of Hamlet, Prince of Denmark</p>
+    <p th:text="|#{book-field-author}: *{author.name}|">Author: William Shakespeare</p>
+    <p th:text="|#{book-field-genre}: *{genre.name}|">Genre: Tragedy</p>
+</div>
+
+<p th:if="${#lists.isEmpty(comments)}" th:text="#{no-comments-text}">There are no comments yet</p>
+
+<table class="comments" th:unless="${#lists.isEmpty(comments)}">
+
+    <thead>
+    <tr>
+        <th th:text="#{comment-field-id}">ID</th>
+        <th th:text="#{comment-field-text}">Comment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment : ${comments}" th:object="${comment}" >
+        <td th:text="*{id}">1</td>
+        <td th:text="*{text}">Shakespeare is brilliant in his handling of Hamlet's crusading character,
+            from showing the difficulty he has in controlling himself to his pretense of madness.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
