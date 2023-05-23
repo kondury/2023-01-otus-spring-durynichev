@@ -34,7 +34,7 @@ class AuthorControllerTest {
     private WebTestClient webClient;
 
     @Test
-    void findAll_shouldReturnAuthorsReturnedByRepository() throws Exception {
+    void findAll_shouldReturnAuthorsReturnedByRepository() {
         var allAuthors = List.of(
                 new Author("authorId1", "Author 1"),
                 new Author("authorId2", "Author 2")
