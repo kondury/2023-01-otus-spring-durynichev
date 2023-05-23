@@ -1,0 +1,22 @@
+﻿
+spring:
+  messages:
+    encoding: UTF-8
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: library
+      uri: mongodb://${spring.data.mongodb.host}:${spring.data.mongodb.port}
+mongock:
+  runner-type: InitializingBean
+  enabled: true
+  migration-scan-package:
+    - com.github.kondury.library.migration
+
+logging:
+  level:
+    root: ERROR
+    web: debug
+    org.springframework: debug
+

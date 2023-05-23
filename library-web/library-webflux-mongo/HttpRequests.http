@@ -1,0 +1,81 @@
+###
+GET http://localhost:8080/api/authors
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:8080/api/genres
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:8080/api/books
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:8080/api/books/<book-id>
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+DELETE http://localhost:8080/api/books/<book-id>
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+POST http://localhost:8080/api/books
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+"title" : "<book title>",
+"authorId" : "<author-id>",
+"genreId" : "<genre-id>"
+}
+
+###
+POST http://localhost:8080/api/books
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "title" : "",
+  "authorId" : "",
+  "genreId" : ""
+}
+
+###
+PUT http://localhost:8080/api/books/<book-id>
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "id" : "<book-id>",
+  "title" : "<tiltle>",
+  "authorId" : "<author-id>",
+  "genreId" : "<genre-id>"
+}
+
+###
+GET http://localhost:8080/api/comments?bookId=<book-id>
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+DELETE http://localhost:8080/api/comments/<comment-id>
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:8080/api/comments/<comment-id>
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
