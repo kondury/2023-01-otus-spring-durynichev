@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Comments list</title>
+    <link rel="stylesheet" href="../../static/css/commentsList.css" th:href="@{/css/commentsList.css}">
+
+    <script lang="js">
+
+        async function fetchAndRender(bookId) {
+            getBookDetails(bookId)
+                .then(book => renderBookDetails(book))
+
+            getCommentsByBookId(bookId)
+                .then(comments => renderComments(comments))
+        }
+
+        async function getBookDetails(bookId) {
+            return fetch('/api/books/' + bookId, {
+                method: 'GET'
+            })
+                .then(response => response.json());
+        }
+
+        function renderBookDetails(book) {
+            const bookDetailsElement = document.getElementById('book-details');
+            bookDetailsElement.innerHTML = `
+                ID: ${book.id}<br>
+                Title: ${book.title}<br>
+                Author: ${book.author.name}<br>
+                Genre: ${book.genre.name}<br>
+            `;
+        }
+
+        async function getCommentsByBookId(bookId) {
+            return fetch('/api/comments?bookId=' + bookId, {
+                method: 'GET'
+            }).then(response => response.json())
+        }
+
+        async function renderComments(comments) {
+            const bookHasComments = comments.length !== 0;
+            if (bookHasComments) {
+                document.getElementById("comments-table-body").innerHTML = comments.map(comment => `
+                    <tr>
+                        <td>${comment.id}</td>
+                        <td>${comment.text}</td>
+                    </tr>
+                `).join('\n');
+            }
+            document.getElementById("no-comments-text").hidden = bookHasComments;
+            document.getElementById("comments-table").hidden = !bookHasComments;
+        }
+    </script>
+</head>
+<body>
+
+<h3 th:text="#{comments-list-header}">Comments:</h3>
+
+<div class="buttons">
+    <a class="button" href="../books/bookList.html" th:href="@{/books/list}" th:text="#{back-button-caption}">Back</a>
+</div>
+
+<div id="book-details" class="row">
+    <!--/*-->
+    ID: 1<br>
+    Title: The Tragedy of Hamlet, Prince of Denmark<br>
+    Author: William Shakespeare<br>
+    Genre: Tragedy<br>
+    <!--*/-->
+</div>
+
+<p id = "no-comments-text" th:text="#{no-comments-text}" th:hidden>There are no comments yet</p>
+
+<table id="comments-table" class="comments" th:hidden>
+
+    <thead>
+    <tr>
+        <th th:text="#{comment-field-id}">ID</th>
+        <th th:text="#{comment-field-text}">Comment</th>
+    </tr>
+    </thead>
+    <tbody id = "comments-table-body">
+    <!--/*-->
+        <tr>
+            <td>1</td>
+            <td>Shakespeare is brilliant in his handling of Hamlet's crusading character,
+                from showing the difficulty he has in controlling himself to his pretense of madness.</td>
+        </tr>
+    <!--*/-->
+    </tbody>
+</table>
+
+<!--/*/
+<script>
+    fetchAndRender('[[${bookId}]]')
+</script>
+/*/-->
+</body>
+</html>
