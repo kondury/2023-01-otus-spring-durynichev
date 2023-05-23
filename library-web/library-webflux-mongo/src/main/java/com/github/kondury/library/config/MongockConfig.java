@@ -36,16 +36,4 @@ public class MongockConfig {
                 .setTransactionEnabled(false)
                 .buildInitializingBeanRunner();
     }
-
-//    @Bean
-//    MongoClient mongoClient(MongoDbProperties properties) {
-//        CodecRegistry codecRegistry = fromRegistries(
-//                MongoClientSettings.getDefaultCodecRegistry(),
-//                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-//
-//        return MongoClients.create(MongoClientSettings.builder()
-//                .applyConnectionString(new ConnectionString(properties.getUri()))
-//                .codecRegistry(codecRegistry)
-//                .build());
-//    }
 }
