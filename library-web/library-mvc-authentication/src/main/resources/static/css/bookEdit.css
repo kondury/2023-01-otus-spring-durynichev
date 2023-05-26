@@ -1,0 +1,44 @@
+body {
+    padding: 50px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+input:read-only {
+    background: lightgray;
+}
+
+input {
+    width: 300px;
+}
+
+select {
+    width: 300px;
+}
+
+.row {
+    margin-top: 10px;
+    min-width: fit-content;
+}
+
+.button {
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 2px 2px 2px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    display:inline-block;
+    width:100px;
+    height:100%;
+    text-align: center;
+}
+
+.errors {
+    color: red;
+}

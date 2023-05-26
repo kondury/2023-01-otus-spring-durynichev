@@ -13,3 +13,6 @@ classic Page Controllers + Rest CRUD Controllers + AJAX pages
 Keywords: Spring Boot, Spring WebFlux, REST Controller, Reactor, MongoDB
 AJAX, Javascript, Controller tests, Spring Data JPA, Liquibase
 
+## 4) Library on classic Page Controllers + Rest CRUD Controllers + AJAX pages + basic authentication
+Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, classic Controller, REST Controller, Spring Security
+AJAX, Javascript, Spring Data JPA, Liquibase, Controller tests, Repository tests, Security tests
