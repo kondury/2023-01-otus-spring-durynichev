@@ -26,3 +26,4 @@ logging:
   level:
     ROOT: ERROR
     web: debug
+

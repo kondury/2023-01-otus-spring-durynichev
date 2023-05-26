@@ -20,6 +20,7 @@
     <modules>
         <module>library-mvc</module>
         <module>library-mvc-rest</module>
+        <module>library-webflux-mongo</module>
     </modules>
 
     <properties>
@@ -46,10 +47,10 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                 </plugin>
-                <plugin>
+<!--?                <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                </plugin>
+                </plugin>-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
