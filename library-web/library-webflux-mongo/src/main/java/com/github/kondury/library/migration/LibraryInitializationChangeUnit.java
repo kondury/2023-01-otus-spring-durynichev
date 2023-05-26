@@ -21,7 +21,7 @@ import java.util.Map;
 @ChangeUnit(id = "initial-documents", order = "001", author = "kondury")
 public class LibraryInitializationChangeUnit {
 
-    private static final Map<String, Class> collections = Map.of(
+    private static final Map<String, Class<?>> collections = Map.of(
             "genres", Genre.class, "authors", Author.class,
         "books", Book.class, "comments", Comment.class);
 

@@ -61,8 +61,7 @@ public class BookController {
                         ? save(request.id(), request.title(), request.authorId(), request.genreId())
                         : Mono.error(() -> {
                             throw new EntityDoesNotExistException("The book does not exist: bookId=" + request.id());
-                        })
-                );
+                        }));
     }
 
     private Mono<BookDto> save(String bookId, String title, String authorId, String genreId) {

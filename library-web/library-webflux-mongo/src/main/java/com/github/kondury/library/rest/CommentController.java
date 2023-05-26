@@ -28,7 +28,7 @@ public class CommentController {
         return commentRepository.findById(id)
                 .map(commentMapper::commentToCommentDto)
                 .map(ResponseEntity::ok)
-                .switchIfEmpty(Mono.fromCallable(() -> ResponseEntity.notFound().build()))                ;
+                .switchIfEmpty(Mono.fromCallable(() -> ResponseEntity.notFound().build()));
     }
 
     @DeleteMapping("/api/comments/{id}")

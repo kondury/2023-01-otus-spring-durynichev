@@ -23,8 +23,7 @@ public class GlobalExceptionHandler {
         return Mono.just(
                 ResponseEntity
                         .badRequest()
-                        .body(getErrorsMap(errors))
-        );
+                        .body(getErrorsMap(errors)));
     }
 
     @ExceptionHandler(EntityDoesNotExistException.class)
@@ -33,8 +32,7 @@ public class GlobalExceptionHandler {
         return Mono.just(
                 ResponseEntity
                         .badRequest()
-                        .body(getErrorsMap(error))
-        );
+                        .body(getErrorsMap(error)));
     }
 
     private Map<String, List<String>> getErrorsMap(List<String> errors) {
