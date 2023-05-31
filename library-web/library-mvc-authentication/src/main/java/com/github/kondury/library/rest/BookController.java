@@ -1,9 +1,9 @@
 package com.github.kondury.library.rest;
 
 
-import com.github.kondury.library.dto.BookDto;
-import com.github.kondury.library.dto.CreateBookRequest;
-import com.github.kondury.library.dto.UpdateBookRequest;
+import com.github.kondury.library.service.dto.BookDto;
+import com.github.kondury.library.service.dto.CreateBookRequest;
+import com.github.kondury.library.service.dto.UpdateBookRequest;
 import com.github.kondury.library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @DeleteMapping("/api/books/{id}")
-    public void deleteBook(@PathVariable Long id) {
+    public void deleteBookById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
 

@@ -1,8 +1,8 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.dto.BookDto;
-import com.github.kondury.library.dto.CreateBookRequest;
-import com.github.kondury.library.dto.UpdateBookRequest;
+import com.github.kondury.library.service.dto.BookDto;
+import com.github.kondury.library.service.dto.CreateBookRequest;
+import com.github.kondury.library.service.dto.UpdateBookRequest;
 import com.github.kondury.library.service.mapper.BookMapper;
 import com.github.kondury.library.repository.AuthorRepository;
 import com.github.kondury.library.repository.BookRepository;

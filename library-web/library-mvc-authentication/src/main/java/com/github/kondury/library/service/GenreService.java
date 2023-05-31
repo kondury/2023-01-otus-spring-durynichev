@@ -1,6 +1,6 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.dto.GenreDto;
+import com.github.kondury.library.service.dto.GenreDto;
 
 import java.util.List;
 import java.util.Optional;

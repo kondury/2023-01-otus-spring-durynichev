@@ -3,10 +3,10 @@ package com.github.kondury.library.service;
 import com.github.kondury.library.domain.Author;
 import com.github.kondury.library.domain.Book;
 import com.github.kondury.library.domain.Genre;
-import com.github.kondury.library.dto.*;
 import com.github.kondury.library.repository.AuthorRepository;
 import com.github.kondury.library.repository.BookRepository;
 import com.github.kondury.library.repository.GenreRepository;
+import com.github.kondury.library.service.dto.*;
 import com.github.kondury.library.service.mapper.BookMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -119,7 +119,7 @@ class BookServiceImplTest {
     }
 
     @Test
-    void findAll_shouldCallRepostioryMethodAndPassDaoResultToMapper() {
+    void findAll_shouldCallRepositoryMethodAndPassDaoResultToMapper() {
         List<Book> booksFromDao = List.of(
                 new Book(10L, "Book 1", new Author(10L, "Author 1"), new Genre(10L, "Genre 1")),
                 new Book(20L, "Book 2", new Author(10L, "Author 2"), new Genre(10L, "Genre 2"))

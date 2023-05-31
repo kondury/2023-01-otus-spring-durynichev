@@ -1,9 +1,9 @@
 package com.github.kondury.library.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kondury.library.dto.*;
 import com.github.kondury.library.service.BookService;
 import com.github.kondury.library.service.EntityDoesNotExistException;
+import com.github.kondury.library.service.dto.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,6 +49,7 @@ class BookControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+    @WithMockUser
     @Test
     void findAllBooks_shouldReturnBooksReturnedByService() throws Exception {
         var author1 = new AuthorDto(1L, "Author1");
@@ -64,6 +67,7 @@ class BookControllerTest {
                         content().json(mapper.writeValueAsString(books)));
     }
 
+    @WithMockUser
     @Test
     void findBookById_givenCorrectId_shouldReturnBookDtoJsonFromServiceReturnValue() throws Exception {
         given(bookService.findById(1L)).willReturn(Optional.of(expectedBook));
@@ -73,6 +77,7 @@ class BookControllerTest {
                         content().json(mapper.writeValueAsString(expectedBook)));
     }
 
+    @WithMockUser
     @Test
     void findBookById_givenNonExistentBookId_shouldReturnNull() throws Exception {
         given(bookService.findById(1L)).willReturn(Optional.empty());
@@ -82,6 +87,7 @@ class BookControllerTest {
                         jsonPath("$").doesNotExist());
     }
 
+    @WithMockUser
     @Test
     void addBook_givenCorrectRequest_shouldCallInsertAndReturnBookDtoFromService() throws Exception {
         CreateBookRequest request = new CreateBookRequest("title", 1L, 1L);
@@ -91,13 +97,15 @@ class BookControllerTest {
         given(bookService.insert(request)).willReturn(expectedBook);
         mvc.perform(post("/api/books")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         status().isOk(),
                         content().json(mapper.writeValueAsString(expectedBook)));
         verify(bookService, times(1)).insert(request);
     }
 
+    @WithMockUser
     @Test
     void updateBook_givenCorrectRequest_shouldCallUpdateAndReturnBookDtoFromService() throws Exception {
         UpdateBookRequest request = new UpdateBookRequest(1L, "title", 1L, 1L);
@@ -107,21 +115,25 @@ class BookControllerTest {
         given(bookService.update(request)).willReturn(expectedBook);
         mvc.perform(put("/api/books/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         status().isOk(),
                         content().json(mapper.writeValueAsString(expectedBook)));
         verify(bookService, times(1)).update(request);
     }
 
+    @WithMockUser
     @Test
-    void deleteBook_serviceDeleteIsCalledAndThenRedirect() throws Exception {
+    void deleteBookById_serviceDeleteIsCalledAndThenRedirect() throws Exception {
         mvc.perform(delete("/api/books/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
                 .andExpect(status().isOk());
         verify(bookService, times(1)).deleteById(1L);
     }
 
+    @WithMockUser
     @ParameterizedTest
     @CsvSource(value = {
             "'', 1, 1, 1",
@@ -135,7 +147,8 @@ class BookControllerTest {
         var request = new CreateBookRequest(title, authorId, genreId);
         mvc.perform(post("/api/books")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         status().isBadRequest(),
                         jsonPath( "$.errors").exists(),
@@ -143,13 +156,15 @@ class BookControllerTest {
                         jsonPath( "$.errors").value(hasSize(errorsCount)));
     }
 
+    @WithMockUser
     @Test
     void updateBook_givenInvalidRequest_shouldPassExceptionToHandlerReturningJsonWithErrors() throws Exception {
         var request = new UpdateBookRequest(1L, "", 1L, 1L);
         var expectedErrorsCount = 1;
         mvc.perform(put("/api/books/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         status().isBadRequest(),
                         jsonPath( "$.errors").exists(),
@@ -157,6 +172,7 @@ class BookControllerTest {
                         jsonPath( "$.errors").value(hasSize(expectedErrorsCount)));
     }
 
+    @WithMockUser
     @ParameterizedTest
     @MethodSource("provideExceptionTestsData")
     void shouldReturnRespectedErrorMessageAndHttpStatusWhenServiceUpdateThrowsException(
@@ -166,13 +182,15 @@ class BookControllerTest {
         given(bookService.update(any())).willThrow(ex);
         mvc.perform(put("/api/books/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         content().string(containsString(resultMessage)),
                         status().reason(resultReason),
                         status().is(resultHttpStatus.value()));
     }
 
+    @WithMockUser
     @ParameterizedTest
     @MethodSource("provideExceptionTestsData")
     void shouldReturnErrorMessageAndRespectedHttpStatusWhenServiceInsertThrowsException(
@@ -182,7 +200,8 @@ class BookControllerTest {
         given(bookService.insert(any())).willThrow(ex);
         mvc.perform(post("/api/books")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(request))
+                        .with(csrf()))
                 .andExpectAll(
                         content().string(containsString(resultMessage)),
                         status().reason(resultReason),

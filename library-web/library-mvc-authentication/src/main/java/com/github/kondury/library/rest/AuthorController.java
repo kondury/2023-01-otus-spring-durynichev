@@ -1,7 +1,7 @@
 package com.github.kondury.library.rest;
 
 
-import com.github.kondury.library.dto.AuthorDto;
+import com.github.kondury.library.service.dto.AuthorDto;
 import com.github.kondury.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

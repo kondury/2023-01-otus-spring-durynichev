@@ -1,6 +1,6 @@
 package com.github.kondury.library.rest;
 
-import com.github.kondury.library.dto.CommentDto;
+import com.github.kondury.library.service.dto.CommentDto;
 import com.github.kondury.library.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

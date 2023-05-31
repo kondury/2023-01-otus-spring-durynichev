@@ -1,4 +1,4 @@
-package com.github.kondury.library.dto;
+package com.github.kondury.library.service.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

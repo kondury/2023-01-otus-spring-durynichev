@@ -1,7 +1,7 @@
 package com.github.kondury.library.service.mapper;
 
 import com.github.kondury.library.domain.Comment;
-import com.github.kondury.library.dto.CommentDto;
+import com.github.kondury.library.service.dto.CommentDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,6 +1,6 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.dto.GenreDto;
+import com.github.kondury.library.service.dto.GenreDto;
 import com.github.kondury.library.service.mapper.GenreMapper;
 import com.github.kondury.library.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.dto.AuthorDto;
+import com.github.kondury.library.service.dto.AuthorDto;
 import com.github.kondury.library.service.mapper.AuthorMapper;
 import com.github.kondury.library.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;

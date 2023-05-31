@@ -1,6 +1,6 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.dto.CommentDto;
+import com.github.kondury.library.service.dto.CommentDto;
 
 import java.util.List;
 import java.util.Optional;
