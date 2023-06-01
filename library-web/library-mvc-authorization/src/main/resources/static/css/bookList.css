@@ -1,0 +1,38 @@
+body {
+    padding: 20px;
+}
+
+.books {
+    border: 1px solid steelblue;
+    width: 600px;
+    border-collapse: collapse;
+}
+
+.books tr td, th {
+    padding: 5px;
+    border: 1px solid steelblue;
+}
+
+.books td:last-child, td:first-child {
+    width: 50px;
+}
+
+.buttons {
+    padding: 2px 2px 4px;
+    border-collapse: collapse;
+}
+
+.button {
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 2px 2px 2px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    display: inline-block;
+    width: 100px;
+    height: 100%;
+    text-align: center;
+}

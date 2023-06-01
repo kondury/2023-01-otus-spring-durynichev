@@ -22,6 +22,7 @@
         <module>library-mvc-rest</module>
         <module>library-webflux-mongo</module>
         <module>library-mvc-authentication</module>
+        <module>library-mvc-authorization</module>
     </modules>
 
     <properties>
