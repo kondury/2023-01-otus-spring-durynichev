@@ -1,5 +1,3 @@
--- todo encode user and admin password using bcrypt algorithm
-
 --changeset kdurynichev:2023-05-28--0001-users-data
 insert into users (username, password)
 values ('admin', '{bcrypt}$2a$10$.57y.iT5LkecstsZJ5NZdOlyt.p4crgegJ2ZkXxzA0ljWn9gbJqPu'),
