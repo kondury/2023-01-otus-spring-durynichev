@@ -16,6 +16,6 @@ Keywords: Spring Boot, Spring WebFlux, Reactive streams, REST, MongoDB, Mongock,
 AJAX, Javascript, Controller tests, WebTestClient
 
 ## 4) Library MVC + basic authentication
-classic Page Controllers + Rest CRUD Controllers + AJAX pages<br>
-Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, classic Controller, REST Controller, Spring Security
-AJAX, Javascript, Spring Data JPA, Liquibase, Controller tests, Repository tests, Security tests
+classic Page Controllers + Rest CRUD Controllers + AJAX pages + Form authentication<br>
+Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, page controllers, REST controllers, Spring Security
+AJAX, Javascript, Spring Data JPA, Liquibase, controllers' tests, repositories tests
