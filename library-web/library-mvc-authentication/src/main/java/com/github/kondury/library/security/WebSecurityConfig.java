@@ -19,9 +19,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService userDetailService) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
                 .formLogin(withDefaults())
-                .httpBasic(withDefaults())
                 .userDetailsService(userDetailService);
         return http.build();
     }
