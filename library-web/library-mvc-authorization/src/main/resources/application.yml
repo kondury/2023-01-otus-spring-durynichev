@@ -2,7 +2,7 @@
   messages:
     encoding: UTF-8
   datasource:
-    url: jdbc:h2:file:./library-mvc-authentication/db/librarydb
+    url: jdbc:h2:file:./library-mvc-authorization/db/librarydb
   #  h2:
   #    console:
   #      path: /h2-console

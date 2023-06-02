@@ -49,17 +49,6 @@ class BookControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-    public static Stream<Arguments> provideExceptionTestsData() {
-        return Stream.of(
-                Arguments.of(new EntityDoesNotExistException(ERROR_MESSAGE),
-                        HttpStatus.BAD_REQUEST, null, ERROR_MESSAGE),
-                Arguments.of(new DataIntegrityViolationException(ERROR_MESSAGE),
-                        HttpStatus.CONFLICT, "Data integrity violation", ""),
-                Arguments.of(new OptimisticLockingFailureException(ERROR_MESSAGE),
-                        HttpStatus.INTERNAL_SERVER_ERROR, null, "Errors")
-        );
-    }
-
     @WithMockUser
     @Test
     void findAllBooks_shouldReturnBooksReturnedByService() throws Exception {
@@ -217,6 +206,17 @@ class BookControllerTest {
                         content().string(containsString(resultMessage)),
                         status().reason(resultReason),
                         status().is(resultHttpStatus.value()));
+    }
+
+    private static Stream<Arguments> provideExceptionTestsData() {
+        return Stream.of(
+                Arguments.of(new EntityDoesNotExistException(ERROR_MESSAGE),
+                        HttpStatus.BAD_REQUEST, null, ERROR_MESSAGE),
+                Arguments.of(new DataIntegrityViolationException(ERROR_MESSAGE),
+                        HttpStatus.CONFLICT, "Data integrity violation", ""),
+                Arguments.of(new OptimisticLockingFailureException(ERROR_MESSAGE),
+                        HttpStatus.INTERNAL_SERVER_ERROR, null, "Errors")
+        );
     }
 
 }

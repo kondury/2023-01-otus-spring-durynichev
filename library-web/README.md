@@ -6,24 +6,24 @@ Keywords: Spring Boot, Spring MVC, Thymeleaf-based views, classic Controller, co
 Spring Data JPA, Liquibase
 
 ## 2) Library MVC REST 
-classic Page Controllers + Rest CRUD Controllers + AJAX pages<br>
-Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, classic Controller, REST Controller, 
+classic Page Controllers + REST CRUD Controllers + AJAX pages<br>
+Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, classic Controller, REST Controller,
 AJAX, Javascript, Controller tests, Spring Data JPA, Liquibase
 
-## 3) Library on Reactive stack
+## 3) Library using the Reactive stack
 
-classic Page Controllers + Rest CRUD Controllers + AJAX pages<br>
+classic Page Controllers + REST CRUD Controllers + AJAX pages<br>
 Keywords: Spring Boot, Spring WebFlux, Reactive streams, REST, MongoDB, Mongock, I18n,
 AJAX, Javascript, Controller tests, WebTestClient
 
-## 4) Library MVC + authentication
+## 4) Library MVC REST with authentication
 
-classic Page Controllers + Rest CRUD Controllers + AJAX pages + Form authentication<br>
+classic Page Controllers + REST CRUD Controllers + AJAX pages + Form authentication<br>
 Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, page controllers, REST controllers, Spring Security
 AJAX, Javascript, Spring Data JPA, Liquibase, controllers' tests, repositories tests
 
-## 5) Library MVC + authentication + authorization
+## 5) Library MVC REST with authentication and authorization
 
-classic Page Controllers + Rest CRUD Controllers + AJAX pages + Form authentication<br>
+classic Page Controllers + REST CRUD Controllers + AJAX pages + Form authentication + URI security<br>
 Keywords: Spring Boot, Spring MVC, Thymeleaf-based pages, page controllers, REST controllers, Spring Security
-AJAX, Javascript, Spring Data JPA, Liquibase, controllers' tests, repositories tests
+AJAX, Javascript, Spring Data JPA, Liquibase, controllers' tests, repositories tests, web security tests
