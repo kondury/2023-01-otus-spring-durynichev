@@ -1,9 +1,9 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.domain.Comment;
-import com.github.kondury.library.service.dto.CommentDto;
+import com.github.kondury.library.model.Comment;
 import com.github.kondury.library.repository.BookRepository;
 import com.github.kondury.library.repository.CommentRepository;
+import com.github.kondury.library.service.dto.CommentDto;
 import com.github.kondury.library.service.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.domain.Author;
-import com.github.kondury.library.domain.Book;
-import com.github.kondury.library.domain.Genre;
+import com.github.kondury.library.model.Author;
+import com.github.kondury.library.model.Book;
+import com.github.kondury.library.model.Genre;
 import com.github.kondury.library.repository.AuthorRepository;
 import com.github.kondury.library.repository.BookRepository;
 import com.github.kondury.library.repository.GenreRepository;

@@ -5,37 +5,64 @@
     <title>List of all books</title>
     <link href="../../static/css/bookList.css" rel="stylesheet" th:href="@{/css/bookList.css}" type="text/css">
 
-    <script lang="js">
-
-        async function renderBooksTable(books) {
-            document.getElementById("booksTableBody").innerHTML = books.map(book => `
-                <tr>
-                    <td> ${book.id} </td>
-                    <td> ${book.title} </td>
-                    <td> ${book.author.name} </td>
-                    <td> ${book.genre.name} </td>
-                    <td>
-                        <a id="list-book-comments" class="button" href="/comments/list?bookId=${book.id}">[[#{comments-button-caption}]]</a>
-                        <a id="edit-book" class="button" href="/books/${book.id}/edit">[[#{edit-button-caption}]]</a>
-                        <a id="delete-book" class="button" onclick="deleteBook(${book.id})" href="#">[[#{delete-button-caption}]]</a>
-                    </td>
-                </tr>
-           `).join('\n');
-        }
+    <script lang="js" th:inline="javascript">
 
         async function fetchAndRenderBooks() {
             fetch('/api/books', {
                 method: 'GET'
-            }).then(response => response.json())
+            })
+                .then(response => response.json())
                 .then(books => renderBooksTable(books))
         }
 
         async function deleteBook(id) {
+            const csrfToken = document.cookie
+                .replace(/(?:^|.*;\s*)XSRF-TOKEN\s*=\s*([^;]*).*$|^.*$/, '$1');
+
             fetch('/api/books/' + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'X-XSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }).then(() => fetchAndRenderBooks());
         }
 
+        async function renderBooksTable(books) {
+            document.getElementById("booksTableBody").innerHTML = books.map(book => renderBookRow(book)).join('\n');
+        }
+
+        function renderBookRow(book) {
+            let row =
+                `<tr>
+                <td> ${book.id} </td>
+                <td> ${book.title} </td>
+                <td> ${book.author.name} </td>
+                <td> ${book.genre.name} </td>
+                <td>
+                    <a id="list-book-comments" class="button" href="/comments/list?bookId=${book.id}">
+                        [(#{comments-button-caption})]
+                    </a>`;
+            [
+        #
+            th:if= "${#authorization.expression('hasAuthority(''UPDATE'')')}"]
+            row +=
+                `<a id="edit-book" class="button" href="/books/${book.id}/edit">
+                        [(#{edit-button-caption})]
+                    </a>`;
+            [/]
+                [
+        #
+            th:if= "${#authorization.expression('hasAuthority(''DELETE'')')}"]
+            row +=
+                `<a id="delete-book" class="button" onclick="deleteBook(${book.id})" href="#">
+                        [(#{delete-button-caption})]
+                    </a>`;
+            [/]
+                row += '</td></tr>\n';
+            return row;
+        }
     </script>
 
 </head>
@@ -50,7 +77,8 @@
 <h3 th:text="#{books-table-header}">Books:</h3>
 
 <div class="buttons">
-    <a class="button" href="bookNew.html" id="add-new-book" th:href="@{/books/new}"
+    <a class="button" href="bookNew.html" id="add-new-book" sec:authorize="hasAuthority('CREATE')"
+       th:href="@{/books/new}"
        th:text="#{new-button-caption}">New</a>
 </div>
 

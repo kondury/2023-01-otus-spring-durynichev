@@ -1,6 +1,6 @@
 package com.github.kondury.library.repository;
 
-import com.github.kondury.library.domain.Author;
+import com.github.kondury.library.model.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

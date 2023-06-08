@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2023-03-04--0001-author
+      id: 2023-03-04--0001-createAuthorsTable
       author: kdurynichev
       changes:
         - createTable:
@@ -11,9 +11,8 @@ databaseChangeLog:
                   type: bigint
                   autoIncrement: true
                   constraints:
-                    nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_author
+                    primaryKeyName: pk_authors
               - column:
                   name: author_name
                   type: varchar(100)

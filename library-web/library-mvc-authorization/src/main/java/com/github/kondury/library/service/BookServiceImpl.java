@@ -1,13 +1,13 @@
 package com.github.kondury.library.service;
 
+import com.github.kondury.library.model.Book;
+import com.github.kondury.library.repository.AuthorRepository;
+import com.github.kondury.library.repository.BookRepository;
+import com.github.kondury.library.repository.GenreRepository;
 import com.github.kondury.library.service.dto.BookDto;
 import com.github.kondury.library.service.dto.CreateBookRequest;
 import com.github.kondury.library.service.dto.UpdateBookRequest;
 import com.github.kondury.library.service.mapper.BookMapper;
-import com.github.kondury.library.repository.AuthorRepository;
-import com.github.kondury.library.repository.BookRepository;
-import com.github.kondury.library.repository.GenreRepository;
-import com.github.kondury.library.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

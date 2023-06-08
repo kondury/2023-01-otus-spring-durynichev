@@ -1,9 +1,9 @@
 package com.github.kondury.library.repository;
 
-import com.github.kondury.library.domain.Author;
-import com.github.kondury.library.domain.Book;
-import com.github.kondury.library.domain.Comment;
-import com.github.kondury.library.domain.Genre;
+import com.github.kondury.library.model.Author;
+import com.github.kondury.library.model.Book;
+import com.github.kondury.library.model.Comment;
+import com.github.kondury.library.model.Genre;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

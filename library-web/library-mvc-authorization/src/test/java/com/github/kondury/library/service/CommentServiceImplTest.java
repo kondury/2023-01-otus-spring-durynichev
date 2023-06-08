@@ -1,10 +1,10 @@
 package com.github.kondury.library.service;
 
-import com.github.kondury.library.domain.Book;
-import com.github.kondury.library.domain.Comment;
-import com.github.kondury.library.service.dto.CommentDto;
+import com.github.kondury.library.model.Book;
+import com.github.kondury.library.model.Comment;
 import com.github.kondury.library.repository.BookRepository;
 import com.github.kondury.library.repository.CommentRepository;
+import com.github.kondury.library.service.dto.CommentDto;
 import com.github.kondury.library.service.mapper.CommentMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

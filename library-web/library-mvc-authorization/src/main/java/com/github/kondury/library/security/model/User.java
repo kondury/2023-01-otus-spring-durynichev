@@ -1,9 +1,11 @@
-package com.github.kondury.library.security;
+package com.github.kondury.library.security.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -22,4 +24,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+    private Collection<Role> roles;
 }

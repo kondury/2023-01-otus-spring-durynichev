@@ -1,6 +1,6 @@
 package com.github.kondury.library.service.mapper;
 
-import com.github.kondury.library.domain.Genre;
+import com.github.kondury.library.model.Genre;
 import com.github.kondury.library.service.dto.GenreDto;
 import org.mapstruct.Mapper;
 

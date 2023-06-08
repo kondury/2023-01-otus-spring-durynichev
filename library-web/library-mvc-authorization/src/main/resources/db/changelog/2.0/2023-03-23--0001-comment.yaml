@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2023-03-23--0001-comment
+      id: 2023-03-23--0001-01-createCommentsTable
       author: kdurynichev
       changes:
         - createTable:
@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_comment
+                    primaryKeyName: pk_comments
               - column:
                   name: comment_text
                   type: varchar(200)
@@ -24,6 +24,16 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_comments_books
-                    references: books(book_id)
-                    deleteCascade: true
+  - changeSet:
+      id: 2023-03-23--0001-02-addFkCommentsBooks
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: comments
+            constraintName: fk_comments_books
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: book_id
+            referencedTableName: books
+            validate: true

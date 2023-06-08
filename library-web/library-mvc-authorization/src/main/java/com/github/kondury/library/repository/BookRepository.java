@@ -1,6 +1,6 @@
 package com.github.kondury.library.repository;
 
-import com.github.kondury.library.domain.Book;
+import com.github.kondury.library.model.Book;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

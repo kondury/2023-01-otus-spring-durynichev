@@ -1,6 +1,6 @@
 package com.github.kondury.library.repository;
 
-import com.github.kondury.library.domain.Comment;
+import com.github.kondury.library.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

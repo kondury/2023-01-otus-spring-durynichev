@@ -5,9 +5,14 @@ export const bookGenreElement = document.getElementById('book-genre');
 export const errorsElement = document.getElementById("validation-errors")
 
 export function saveBook(book, uri, httpMethod) {
+
+    const csrfToken = document.cookie
+        .replace(/(?:^|.*;\s*)XSRF-TOKEN\s*=\s*([^;]*).*$|^.*$/, '$1');
+
     return fetch(uri, {
         method: httpMethod,
         headers: {
+            'X-XSRF-TOKEN': csrfToken,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
