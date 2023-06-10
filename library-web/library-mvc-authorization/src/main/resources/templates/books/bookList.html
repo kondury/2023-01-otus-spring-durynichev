@@ -44,23 +44,19 @@
                     <a id="list-book-comments" class="button" href="/comments/list?bookId=${book.id}">
                         [(#{comments-button-caption})]
                     </a>`;
-            [
-        #
-            th:if= "${#authorization.expression('hasAuthority(''UPDATE'')')}"]
+            [# th:if= "${#authorization.expression('hasAuthority(''UPDATE'')')}"]
             row +=
                 `<a id="edit-book" class="button" href="/books/${book.id}/edit">
                         [(#{edit-button-caption})]
                     </a>`;
             [/]
-                [
-        #
-            th:if= "${#authorization.expression('hasAuthority(''DELETE'')')}"]
+            [# th:if= "${#authorization.expression('hasAuthority(''DELETE'')')}"]
             row +=
                 `<a id="delete-book" class="button" onclick="deleteBook(${book.id})" href="#">
                         [(#{delete-button-caption})]
                     </a>`;
             [/]
-                row += '</td></tr>\n';
+            row += '</td></tr>\n';
             return row;
         }
     </script>
