@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2023-03-04--0002-01-createBooksTable
+      author: kdurynichev
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: book_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_books
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: genre_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2023-03-04--0002-02-addFkBooksAuthors
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: books
+            constraintName: fk_books_authors
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: author_id
+            referencedTableName: authors
+            validate: true
+  - changeSet:
+      id: 2023-03-04--0002-03-addFkBooksGenres
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: genre_id
+            baseTableName: books
+            constraintName: fk_books_genres
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: genre_id
+            referencedTableName: genres
+            validate: true
+
+#  -  changeSet:
+#       id:  2023-03-04--0002-fk_books_authors
+#       author:  kdurynichev
+#       changes:
+#         -  addForeignKeyConstraint:
+#              baseColumnNames:  author_id
+#              #              baseTableCatalogName:  cat
+#              baseTableName:  books
+#              #              baseTableSchemaName:  public
+#              constraintName:  fk_books_authors
+#              #              deferrable:  true
+#              #              initiallyDeferred:  true
+#              onDelete:  RESTRICT
+#              onUpdate:  NO ACTION
+#              referencedColumnNames:  author_id
+#              #              referencedTableCatalogName:  cat
+#              referencedTableName:  authors
+#  #              referencedTableSchemaName:  public
+#  #              validate:  true
