@@ -36,13 +36,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControllersSecurityTests {
 
     @MockBean
-    AuthorService authorService;
+    private AuthorService authorService;
     @MockBean
-    BookService bookService;
+    private BookService bookService;
     @MockBean
-    GenreService genreService;
+    private GenreService genreService;
     @MockBean
-    CommentService commentService;
+    private CommentService commentService;
 
     @Autowired
     private MockMvc mvc;
