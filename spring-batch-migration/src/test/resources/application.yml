@@ -1,0 +1,48 @@
+﻿spring:
+  datasource:
+    # noinspection SpellCheckingInspection
+    url: jdbc:h2:mem:librarytestdb
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    enabled: true
+  sql:
+    init:
+      mode: never
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: library
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+  shell:
+    interactive:
+      # noinspection SpringBootApplicationYaml
+      enabled: false
+    noninteractive:
+      # noinspection SpringBootApplicationYaml
+      enabled: false
+    command:
+      version:
+        # noinspection SpringBootApplicationYaml
+        enabled: false
+    history:
+      # noinspection SpringBootApplicationYaml
+      name: ./library-migration-shell.log
+logging:
+  level:
+    ROOT: ERROR
+
+de:
+  # noinspection SpellCheckingInspection
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.5
+

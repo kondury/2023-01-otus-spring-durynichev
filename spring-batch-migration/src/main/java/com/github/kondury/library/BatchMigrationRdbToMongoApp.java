@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BatchMigrationRdbToMongoApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(BatchMigrationRdbToMongoApp.class);
+        //SpringApplication.run(BatchMigrationRdbToMongoApp.class);
+        System.exit(SpringApplication.exit(SpringApplication.run(BatchMigrationRdbToMongoApp.class, args)));
     }
 }
