@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add book</title>
+    <link href="../../static/css/bookEdit.css" rel="stylesheet" th:href="@{/css/bookEdit.css}" type="text/css">
+</head>
+<body>
+
+<!--/* Book edition */-->
+<form action="#" id="book-edit-form">
+    <h3 th:text="#{book-form-header}">Add new book:</h3>
+
+    <div class="row">
+        <label for="book-title" th:text="#{book-field-title} + ':'">Title:</label>
+        <input id="book-title" name="title" placeholder="Enter book title" th:placeholder="#{input-book-title-placeholder}"
+               type="text" value=""/>
+    </div>
+
+    <div class="row">
+        <label for="book-author" th:text="#{book-field-author} + ':'">Author:</label>
+        <select id="book-author" name="authorId">
+            <!--/*-->
+            <option value="">- Select author -</option>
+            <option value="1">Stanislav Lem</option>
+            <option value="2">Frank Herbert</option>
+            <!--*/-->
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="book-genre" th:text="#{book-field-genre} + ':'">Genre:</label>
+        <select id="book-genre" name="genreId">
+            <!--/*-->
+            <option selected value="">- Select genre -</option>
+            <option value="1">Science Fiction</option>
+            <option value="2">Detective</option>
+            <!--*/-->
+        </select>
+    </div>
+
+    <div class="row">
+        <button class="button" id="save-book-button" th:text="#{save-button-caption}" type="button">Save</button>
+        <a href="bookList.html" th:href="@{/books/list}">
+            <button class="button" th:text="#{cancel-button-caption}" type="button">Cancel</button>
+        </a>
+    </div>
+
+</form>
+
+<div class="errors" id="validation-errors">
+    <!--/*-->
+    <h4>Errors:</h4>
+    <div>Something went wrong</div>
+    <!--*/-->
+</div>
+
+<!--/*/
+<script type="module" th:inline="javascript" th:insert="js/book-new.js"></script>
+/*/-->
+
+</body>
+</html>
