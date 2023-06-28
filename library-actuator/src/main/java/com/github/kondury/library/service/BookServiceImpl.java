@@ -70,4 +70,10 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public long count() {
+        return bookRepository.count();
+    }
+
 }

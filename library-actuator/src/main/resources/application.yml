@@ -22,9 +22,31 @@
   sql:
     init:
       mode: never
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    logfile:
+      enabled: true
+  health:
+    defaults:
+      enabled: true
 logging:
   level:
     ROOT: ERROR
     web: debug
-#    web: trace
-
+    # web: trace
+    com.github.kondury: debug
+  file:
+    name: ./log/library.log
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
+      max-file-size: 100B

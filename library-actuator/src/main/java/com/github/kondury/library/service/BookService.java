@@ -18,4 +18,8 @@ public interface BookService {
     Optional<BookDto> findById(long id);
 
     void deleteById(long id);
+
+    long count();
+
+
 }

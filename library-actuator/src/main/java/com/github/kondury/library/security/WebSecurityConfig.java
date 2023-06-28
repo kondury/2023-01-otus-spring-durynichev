@@ -26,7 +26,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService userDetailService) throws Exception {
 
         http
-                //.csrf().disable()
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
@@ -54,14 +53,15 @@ public class WebSecurityConfig {
                         .hasAuthority("UPDATE")
                         .requestMatchers(HttpMethod.DELETE, "/api/**")
                         .hasAuthority("DELETE")
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .anyRequest().denyAll()
                 )
                 .formLogin(withDefaults())
                 .userDetailsService(userDetailService)
-                .exceptionHandling()
-                .defaultAuthenticationEntryPointFor(
-                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**"));
+                .exceptionHandling(e -> e
+                        .defaultAuthenticationEntryPointFor(
+                                new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
+                                new AntPathRequestMatcher("/api/**")));
 
         return http.build();
     }
