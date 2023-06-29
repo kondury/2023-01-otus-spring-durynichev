@@ -53,7 +53,6 @@ public class WebSecurityConfig {
                         .hasAuthority("UPDATE")
                         .requestMatchers(HttpMethod.DELETE, "/api/**")
                         .hasAuthority("DELETE")
-                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .anyRequest().denyAll()
                 )
                 .formLogin(withDefaults())
