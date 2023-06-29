@@ -49,4 +49,4 @@ logging:
     rollingpolicy:
       clean-history-on-start: true
       file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
-      max-file-size: 100B
+      max-file-size: 100KB
