@@ -39,3 +39,6 @@ build/
 
 /db/
 /log/
+
+docker/grafana
+docker/prometheus

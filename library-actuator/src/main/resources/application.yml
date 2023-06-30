@@ -24,19 +24,31 @@
       mode: never
 management:
   endpoints:
+    jmx:
+      exposure:
+        include: "health,logfile"
     web:
       exposure:
-        include: "*"
-    enabled-by-default: true
+        include: "health,logfile,prometheus"
+    enabled-by-default: false
   endpoint:
     health:
       show-details: always
       enabled: true
     logfile:
       enabled: true
+    prometheus:
+      enabled: true
   health:
     defaults:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
 logging:
   level:
     ROOT: ERROR
