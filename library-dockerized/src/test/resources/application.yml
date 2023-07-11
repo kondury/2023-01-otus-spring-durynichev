@@ -1,6 +1,8 @@
-﻿spring:
-  datasource:
-    url: jdbc:h2:mem:librarytestdb
+﻿#spring:
+#  messages:
+#    encoding: UTF-8
+
+spring:
   jpa:
     hibernate:
       ddl-auto: validate

@@ -54,23 +54,3 @@ databaseChangeLog:
             referencedColumnNames: genre_id
             referencedTableName: genres
             validate: true
-
-#  -  changeSet:
-#       id:  2023-03-04--0002-fk_books_authors
-#       author:  kdurynichev
-#       changes:
-#         -  addForeignKeyConstraint:
-#              baseColumnNames:  author_id
-#              #              baseTableCatalogName:  cat
-#              baseTableName:  books
-#              #              baseTableSchemaName:  public
-#              constraintName:  fk_books_authors
-#              #              deferrable:  true
-#              #              initiallyDeferred:  true
-#              onDelete:  RESTRICT
-#              onUpdate:  NO ACTION
-#              referencedColumnNames:  author_id
-#              #              referencedTableCatalogName:  cat
-#              referencedTableName:  authors
-#  #              referencedTableSchemaName:  public
-#  #              validate:  true

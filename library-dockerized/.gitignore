@@ -37,8 +37,8 @@ build/
 ### VS Code ###
 .vscode/
 
-/db/
 /log/
 
 docker/grafana
 docker/prometheus
+docker/postgres

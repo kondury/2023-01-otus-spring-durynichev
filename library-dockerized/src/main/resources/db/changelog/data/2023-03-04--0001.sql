@@ -10,12 +10,12 @@ values ('Science Fiction'),
        ('Detective');
 
 --changeset kdurynichev:2023-03-10--0003-books-data
-with book_data (title, author_name, genre_name) as (select *
-                                                    from
-                                                    values ('Solaris', 'Stanislaw Lem', 'Science Fiction'),
-                                                           ('Dune', 'Frank Herbert', 'Science Fiction'),
-                                                           ('Murder on the Orient Express', 'Agatha Christie',
-                                                            'Detective'))
+with book_data (title, author_name, genre_name) as (
+    select *
+    from (values ('Solaris', 'Stanislaw Lem', 'Science Fiction'),
+                 ('Dune', 'Frank Herbert', 'Science Fiction'),
+                 ('Murder on the Orient Express', 'Agatha Christie', 'Detective')) as bd
+    )
 insert
 into books (title, author_id, genre_id)
 select book_data.title, authors.author_id, genres.genre_id

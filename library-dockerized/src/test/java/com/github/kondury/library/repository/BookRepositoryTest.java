@@ -1,29 +1,33 @@
 package com.github.kondury.library.repository;
 
+import com.github.kondury.library.config.TestContainersConfig;
 import com.github.kondury.library.model.Author;
 import com.github.kondury.library.model.Book;
 import com.github.kondury.library.model.Comment;
 import com.github.kondury.library.model.Genre;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest
+@Transactional
+@SpringBootTest(classes = TestContainersConfig.class)
 class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
+
     @Autowired
-    private TestEntityManager em;
+    private EntityManager em;
 
     @Test
     void findAllCompleted_shouldReturnAllBooksWithCorrectAuthorsAndGenres() {
@@ -62,8 +66,8 @@ class BookRepositoryTest {
         long authorId = 1L;
         long genreId = 2L;
         Book book = new Book(null, title,
-                em.getEntityManager().getReference(Author.class, authorId),
-                em.getEntityManager().getReference(Genre.class, genreId));
+                em.getReference(Author.class, authorId),
+                em.getReference(Genre.class, genreId));
 
         bookRepository.save(book);
         assertThat(book.getId()).isNotNull();
@@ -87,8 +91,9 @@ class BookRepositoryTest {
             long genreId
     ) {
         Book book = new Book(null, title,
-                em.getEntityManager().getReference(Author.class, authorId),
-                em.getEntityManager().getReference(Genre.class, genreId));
+                em.getReference(Author.class, authorId),
+                em.getReference(Genre.class, genreId));
+
         assertThatThrownBy(() -> bookRepository.save(book)).isInstanceOf(DataIntegrityViolationException.class);
     }
 

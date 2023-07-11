@@ -1,26 +1,29 @@
 package com.github.kondury.library.repository;
 
+import com.github.kondury.library.config.TestContainersConfig;
 import com.github.kondury.library.model.Book;
 import com.github.kondury.library.model.Comment;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest
+@Transactional
+@SpringBootTest(classes = TestContainersConfig.class)
 class CommentRepositoryTest {
 
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private TestEntityManager em;
+    private EntityManager em;
 
     @Test
     void findByBookId_shouldReturnAllBookCommentsWithCorrectFields() {
@@ -59,7 +62,7 @@ class CommentRepositoryTest {
         String text = "A new comment";
         long bookId = 1L;
         Comment comment = new Comment(null, text,
-                em.getEntityManager().getReference(Book.class, bookId));
+                em.getReference(Book.class, bookId));
 
         commentRepository.save(comment);
         assertThat(comment.getId()).isNotNull();
@@ -76,7 +79,7 @@ class CommentRepositoryTest {
     @ValueSource(longs = {0L, -1L, 3L, 1000L})
     void save_shouldThrowExceptionWhenInsertCommentWithBookHavingInvalidId(long bookId) {
         String text = "A new comment";
-        Comment comment = new Comment(null, text, em.getEntityManager().getReference(Book.class, bookId));
+        Comment comment = new Comment(null, text, em.getReference(Book.class, bookId));
         assertThatThrownBy(() -> commentRepository.save(comment)).isInstanceOf(DataIntegrityViolationException.class);
     }
 
@@ -87,7 +90,7 @@ class CommentRepositoryTest {
 
         String expectedText = "A new comment";
         var expectedBookId = commentToUpdate.getBook().getId() == 1L ? 2L : 1L;
-        var expectedBook = em.getEntityManager().getReference(Book.class, expectedBookId);
+        var expectedBook = em.getReference(Book.class, expectedBookId);
         var expectedComment = new Comment(existentCommentId, expectedText, expectedBook);
         em.clear();
 

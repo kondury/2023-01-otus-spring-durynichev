@@ -6,11 +6,10 @@ values ('ADMIN'),
 
 --changeset kdurynichev:2023-06-07--0001-02-users-roles-data
 with users_roles_data (username, role_name) as (select *
-                                                from
-                                                values ('admin', 'ADMIN'),
-                                                       ('user', 'USER'))
+                                                from (values ('admin', 'ADMIN'),
+                                                             ('user', 'USER')) as urd)
 insert
-into USERS_ROLES (user_id, role_id)
+into users_roles (user_id, role_id)
 select user_id, role_id
 from users_roles_data
          join users on users.username = users_roles_data.username
@@ -25,12 +24,11 @@ values ('CREATE'),
 
 --changeset kdurynichev:2023-06-07--0001-04-roles-privileges-data
 with roles_privileges_data (role_name, privilege_name) as (select *
-                                                           from
-                                                           values ('ADMIN', 'CREATE'),
-                                                                  ('ADMIN', 'UPDATE'),
-                                                                  ('ADMIN', 'DELETE'),
-                                                                  ('ADMIN', 'READ'),
-                                                                  ('USER', 'READ'))
+                                                           from (values ('ADMIN', 'CREATE'),
+                                                                        ('ADMIN', 'UPDATE'),
+                                                                        ('ADMIN', 'DELETE'),
+                                                                        ('ADMIN', 'READ'),
+                                                                        ('USER', 'READ')) as rpd)
 insert
 into roles_privileges (role_id, privilege_id)
 select role_id, privilege_id

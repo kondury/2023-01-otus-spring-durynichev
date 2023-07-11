@@ -2,20 +2,13 @@
   messages:
     encoding: UTF-8
   datasource:
-    url: jdbc:h2:file:./db/librarydb
-  #    h2:
-  #      console:
-  #        path: /h2-console
-  #        settings:
-  #          web-allow-others: true
-  #        enabled: true
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/librarydb}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
   jpa:
-    #    generate-ddl: true
     hibernate:
       ddl-auto: validate
-    #    properties:
-    #      hibernate:
-    #        format_sql: true
     show-sql: true
   liquibase:
     enabled: true
@@ -52,9 +45,9 @@ management:
 logging:
   level:
     ROOT: ERROR
-    web: debug
+#    web: debug
     # web: trace
-    com.github.kondury: debug
+#    com.github.kondury: debug
   file:
     name: ./log/library.log
   logback:
