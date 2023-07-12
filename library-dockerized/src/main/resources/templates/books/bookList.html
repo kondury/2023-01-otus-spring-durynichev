@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all books</title>
+    <link href="../../static/css/bookList.css" rel="stylesheet" th:href="@{/css/bookList.css}" type="text/css">
+
+    <script lang="js" th:inline="javascript">
+
+        async function fetchAndRenderBooks() {
+            fetch('/api/books', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(books => renderBooksTable(books))
+        }
+
+        async function deleteBook(id) {
+            const csrfToken = document.cookie
+                .replace(/(?:^|.*;\s*)XSRF-TOKEN\s*=\s*([^;]*).*$|^.*$/, '$1');
+
+            fetch('/api/books/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'X-XSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => fetchAndRenderBooks());
+        }
+
+        async function renderBooksTable(books) {
+            document.getElementById("booksTableBody").innerHTML = books.map(book => renderBookRow(book)).join('\n');
+        }
+
+        function renderBookRow(book) {
+            let row =
+                `<tr>
+                <td> ${book.id} </td>
+                <td> ${book.title} </td>
+                <td> ${book.author.name} </td>
+                <td> ${book.genre.name} </td>
+                <td>
+                    <a id="list-book-comments" class="button" href="/comments/list?bookId=${book.id}">
+                        [(#{comments-button-caption})]
+                    </a>`;
+            [# th:if= "${#authorization.expression('hasAuthority(''UPDATE'')')}"]
+            row +=
+                `<a id="edit-book" class="button" href="/books/${book.id}/edit">
+                        [(#{edit-button-caption})]
+                    </a>`;
+            [/]
+            [# th:if= "${#authorization.expression('hasAuthority(''DELETE'')')}"]
+            row +=
+                `<a id="delete-book" class="button" onclick="deleteBook(${book.id})" href="#">
+                        [(#{delete-button-caption})]
+                    </a>`;
+            [/]
+            row += '</td></tr>\n';
+            return row;
+        }
+    </script>
+
+</head>
+<body>
+
+<h3 th:text="#{lang-switcher-header}">Select language</h3>
+<div>
+    <div><a href="#" th:href="@{/(lang=en)}" th:text="#{en-lang-switch-button-caption}">Language - EN</a></div>
+    <div><a href="#" th:href="@{/(lang=ru)}" th:text="#{ru-lang-switch-button-caption}">Language - RU</a></div>
+</div>
+
+<h3 th:text="#{books-table-header}">Books:</h3>
+
+<div class="buttons">
+    <a class="button" href="bookNew.html" id="add-new-book" sec:authorize="hasAuthority('CREATE')"
+       th:href="@{/books/new}"
+       th:text="#{new-button-caption}">New</a>
+</div>
+
+<table class="books">
+    <thead>
+    <tr>
+        <th th:text="#{book-field-id}">ID</th>
+        <th th:text="#{book-field-title}">Name</th>
+        <th th:text="#{book-field-author}">Author</th>
+        <th th:text="#{book-field-genre}">Genre</th>
+        <th th:text="#{books-table-column-actions}">Actions</th>
+    </tr>
+    </thead>
+    <tbody id="booksTableBody">
+    <!--/*-->
+    <tr>
+        <td>1</td>
+        <td>The Tragedy of Hamlet, Prince of Denmark</td>
+        <td>William Shakespeare</td>
+        <td>Tragedy</td>
+        <td>
+            <a class="button" href="../comments/commentsList.html" id="list-book-comments">Comments</a>
+            <a class="button" href="../books/bookUpdate.html" id="edit-book">Edit</a>
+            <a class="button" href="#" id="delete-book">Delete</a>
+        </td>
+    </tr>
+    <!--*/-->
+    </tbody>
+</table>
+
+<!--/*/
+<script>
+    fetchAndRenderBooks()
+</script>
+/*/-->
+
+</body>
+</html>
