@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2023-06-07--0001-01-createRolesTable
+      author: kdurynichev
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_roles
+              - column:
+                  name: role_name
+                  type: varchar(200)
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_role_name
+                    nullable: false
+  - changeSet:
+      id: 2023-06-07--0001-02-createUsersRolesTable
+      author: kdurynichev
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2023-06-07--0001-03-addFkUsersRolesToUsers
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: users_roles
+            constraintName: fk_users_roles_roles
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: role_id
+            referencedTableName: roles
+            validate: true
+  - changeSet:
+      id: 2023-06-07--0001-04-addFkUsersRolesToRoles
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: users_roles
+            constraintName: fk_users_roles_users
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: user_id
+            referencedTableName: users
+            validate: true

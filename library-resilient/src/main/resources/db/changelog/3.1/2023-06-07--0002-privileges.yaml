@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2023-06-07--0002-createPrivilegesTable
+      author: kdurynichev
+      changes:
+        - createTable:
+            tableName: privileges
+            columns:
+              - column:
+                  name: privilege_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_privileges
+              - column:
+                  name: privilege_name
+                  type: varchar(200)
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_privilege_name
+                    nullable: false
+  - changeSet:
+      id: 2023-06-07--0002-02-createRolesPrivilegesTable
+      author: kdurynichev
+      changes:
+        - createTable:
+            tableName: roles_privileges
+            columns:
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: privilege_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2023-06-07--0002-03-addFkRolesPrivilegesToRoles
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: roles_privileges
+            constraintName: fk_roles_privileges_roles
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: role_id
+            referencedTableName: roles
+            validate: true
+  - changeSet:
+      id: 2023-06-07--0002-04-addFkRolesPrivilegesToPrivileges
+      author: kdurynichev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: privilege_id
+            baseTableName: roles_privileges
+            constraintName: fk_roles_privileges_privileges
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+            referencedColumnNames: privilege_id
+            referencedTableName: privileges
+            validate: true
