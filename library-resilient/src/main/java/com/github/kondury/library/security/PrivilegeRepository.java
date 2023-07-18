@@ -14,7 +14,6 @@ public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
             select p
             from Role r
             join r.privileges p
-            where r in :roles"""
-    )
+            where r in :roles""")
     Collection<Privilege> findByRoles(@Param("roles") Collection<Role> roles);
 }

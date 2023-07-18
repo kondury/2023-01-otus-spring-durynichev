@@ -5,6 +5,7 @@ import com.github.kondury.library.repository.BookRepository;
 import com.github.kondury.library.repository.CommentRepository;
 import com.github.kondury.library.service.dto.CommentDto;
 import com.github.kondury.library.service.mapper.CommentMapper;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +23,21 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public CommentDto insert(long bookId, String text) {
         return save(null, bookId, text);
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public CommentDto update(long commentId, long bookId, String text) {
         return save(commentId, bookId, text);
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional(readOnly = true)
     public List<CommentDto> findByBookId(long bookId) {
         return commentRepository.findByBookId(bookId).stream()
@@ -42,6 +46,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional(readOnly = true)
     public Optional<CommentDto> findById(long id) {
         return commentRepository.findById(id)
@@ -49,6 +54,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public void deleteById(long id) {
         commentRepository.deleteById(id);

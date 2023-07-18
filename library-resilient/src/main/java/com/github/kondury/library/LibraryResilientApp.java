@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LibraryDockerizedApp {
+public class LibraryResilientApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(LibraryDockerizedApp.class);
+        SpringApplication.run(LibraryResilientApp.class);
     }
 }

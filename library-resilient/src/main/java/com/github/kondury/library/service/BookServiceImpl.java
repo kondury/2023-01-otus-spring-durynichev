@@ -8,6 +8,7 @@ import com.github.kondury.library.service.dto.BookDto;
 import com.github.kondury.library.service.dto.CreateBookRequest;
 import com.github.kondury.library.service.dto.UpdateBookRequest;
 import com.github.kondury.library.service.mapper.BookMapper;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +27,14 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public BookDto insert(CreateBookRequest request) {
         return save(null, request.title(), request.authorId(), request.genreId());
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public BookDto update(UpdateBookRequest request) {
         if (!bookRepository.existsById(request.id()))
@@ -50,6 +53,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional(readOnly = true)
     public List<BookDto> findAll() {
         return bookRepository.findAll().stream()
@@ -58,6 +62,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional(readOnly = true)
     public Optional<BookDto> findById(long id) {
         return bookRepository.findById(id)
@@ -65,12 +70,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional
     public void deleteById(long id) {
         bookRepository.deleteById(id);
     }
 
     @Override
+    @CircuitBreaker(name = "default-service")
     @Transactional(readOnly = true)
     public long count() {
         return bookRepository.count();

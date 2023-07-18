@@ -42,6 +42,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+#      - PROMETHEUS_DATASOURCE= http://prometheus-dev:9090
     networks:
       monitoring-dev:
   prometheus-dev:
@@ -55,6 +56,8 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       monitoring-dev:
+        aliases:
+          - prometheus
 networks:
   main-dev:
   monitoring-dev:

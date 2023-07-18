@@ -26,7 +26,7 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.26</org.projectlombok.version>
         <testcontainers.version>1.18.3</testcontainers.version>
-        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <resilience4j.version>2.1.0</resilience4j.version>
     </properties>
 
     <dependencyManagement>
@@ -35,14 +35,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -66,6 +58,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <dependency>
@@ -111,6 +108,13 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
+        <!-- fault tolerance -->
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-spring-boot3</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+
         <!-- monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -120,12 +124,6 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-
-        <!-- spring cloud -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
 
         <!-- test -->

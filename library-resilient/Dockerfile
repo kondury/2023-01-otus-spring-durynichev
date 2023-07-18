@@ -18,5 +18,5 @@ RUN ./mvnw package -DskipTests
 
 FROM bellsoft/liberica-openjdk-alpine:17.0.7 as production
 EXPOSE 8080
-COPY --from=build /app/target/library-dockerized-*.jar /library-dockerized.jar
-CMD ["java", "-jar", "/library-dockerized.jar"]
+COPY --from=build /app/target/library-resilient-*.jar /library-resilient.jar
+CMD ["java", "-jar", "/library-resilient.jar"]

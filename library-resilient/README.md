@@ -13,5 +13,5 @@
 **Требования:**
 
 1. Обернуть все внешние вызовы в ~~Hystrix, Hystrix Javanica~~ Resilience4j.
-3. Возможно использование Feign Client
-4. Опционально: Поднять ~~Turbine Dashboard~~ Grafana для мониторинга.
+2. Возможно использование Feign Client
+3. Опционально: Поднять ~~Turbine Dashboard~~ Grafana для мониторинга.
