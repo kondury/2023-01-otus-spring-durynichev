@@ -1,0 +1,85 @@
+﻿spring:
+  application.name: library-application
+  messages.encoding: UTF-8
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/librarydb}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa.hibernate:
+    ddl-auto: validate
+#    show-sql: true
+  liquibase.enabled: true
+  sql.init.mode: never
+
+management:
+  endpoints:
+    jmx.exposure.include: "health, logfile"
+    web.exposure.include: "health, logfile, prometheus"
+    enabled-by-default: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    logfile.enabled: true
+    prometheus.enabled: true
+  health:
+    defaults.enabled: true
+    circuitbreakers.enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        resilience4j.circuitbreaker.calls: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+#    distribution:
+#      percentiles-histogram:
+#        "[http.server.requests]": true
+#        "[resilience4j.circuitbreaker.calls]": true
+
+logging:
+  level:
+    ROOT: error
+    io.github.resilience4j: debug
+#    web: debug
+    com.github.kondury: debug
+  file:
+    name: ./log/library.log
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
+      max-file-size: 100KB
+
+resilience4j.circuitbreaker:
+  metrics:
+    enabled: true
+  configs:
+    default:
+      register-health-indicator: true
+      allow-health-indicator-to-fail: true
+      sliding-window-size: 10
+      minimum-number-of-calls: 5
+      permitted-number-of-calls-in-half-open-state: 2
+      automatic-transition-from-open-to-half-open-enabled: true
+      wait-duration-in-open-state: 30s
+      failure-rate-threshold: 50
+  instances:
+    default-service:
+      base-config: default
+      minimum-number-of-calls: 10
+      failure-rate-threshold: 50
+      permitted-number-of-calls-in-half-open-state: 1
+      ignore-exceptions:
+        - com.github.kondury.library.service.EntityDoesNotExistException
+    security-service:
+      base-config: default
+      sliding-window-type: time_based
+      sliding-window-size: 10
+      ignore-exceptions:
+        - org.springframework.security.core.userdetails.UsernameNotFoundException

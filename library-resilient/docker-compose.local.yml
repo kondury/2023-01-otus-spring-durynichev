@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  postgres-localdev:
+    image: "postgres:15.3"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=librarydb
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    networks:
+      main-localdev:
+  grafana-localdev:
+    build: './docker/config/grafana'
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      monitoring-localdev:
+        aliases:
+          - grafana
+  prometheus-localdev:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      monitoring-localdev:
+        aliases:
+          - prometheus
+networks:
+  monitoring-localdev:
+  main-localdev:

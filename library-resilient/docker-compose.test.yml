@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  library-test:
+    build:
+      context: .
+      target: test
+    stop_signal: SIGKILL
+    stdin_open: true
+    tty: true
+    environment:
+      # run TestContainers using Docker Desktop
+      - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
+    volumes:
+      - ./:/app
+      # run TestContainers
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Maven cache (optional)
+      - ~/.m2:/root/.m2
+    networks:
+      main-test:
+networks:
+  main-test:

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit book</title>
+    <link href="../../static/css/bookEdit.css" rel="stylesheet" th:href="@{/css/bookEdit.css}" type="text/css">
+</head>
+<body>
+
+<!--/* Book edition */-->
+<h3 th:text="#{book-form-header}">Book details:</h3>
+
+<div class="errors" id="book-does-not-exist" th:text="#{book-does-not-exist-message}">Here will be error message when
+    book does not exist
+</div>
+
+<form action="#" id="book-update-form">
+    <div class="row">
+        <label for="book-id" th:text="#{book-field-id} + ':'">ID:</label>
+        <input id="book-id" name="id" readonly th:value="${bookId}" type="text" value="1"/>
+    </div>
+
+    <div class="row">
+        <label for="book-title" th:text="#{book-field-title} + ':'">Title:</label>
+        <input id="book-title" name="title" placeholder="Enter book title" th:placeholder="#{input-book-title-placeholder}"
+               type="text" value="The Tragedy of Hamlet, Prince of Denmark"/>
+    </div>
+
+    <div class="row">
+        <label for="book-author" th:text="#{book-field-author} + ':'">Author:</label>
+        <select id="book-author" name="authorId">
+            <!--/*-->
+            <option value="1">Stanislav Lem</option>
+            <option value="2">Frank Herbert</option>
+            <option selected value="3">William Shakespeare</option>
+            <!--*/-->
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="book-genre" th:text="#{book-field-genre} + ':'">Genre:</label>
+        <select id="book-genre" name="genreId">
+            <!--/*-->
+            <option selected value="1">Science Fiction</option>
+            <option value="2">Detective</option>
+            <option value="3">Tragedy</option>
+            <!--*/-->
+        </select>
+    </div>
+
+</form>
+
+<div class="row">
+    <button class="button" id="save-book-button" th:text="#{save-button-caption}" type="button">Save</button>
+    <a href="bookList.html" th:href="@{/books/list}">
+        <button class="button" th:text="#{cancel-button-caption}" type="button">Cancel</button>
+    </a>
+</div>
+
+<div class="errors" id="validation-errors">
+    <!--/*-->
+    <h4>Errors:</h4>
+    <div>Something went wrong</div>
+    <!--*/-->
+</div>
+
+<!--/*/
+<script type="module" th:inline="javascript" th:insert="js/book-update.js"></script>
+/*/-->
+
+</body>
+</html>
